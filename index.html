@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,26 +23,10 @@
       --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
-    [data-theme="dark"] {
-      --bg-color: #0f172a;
-      --text-color: #f1f5f9;
-      --border-color: #334155;
-      --card-bg: #1e293b;
-      --primary-color: #60a5fa;
-      --primary-hover: #3b82f6;
-      --danger-color: #f87171;
-      --danger-bg: #451a1a;
-      --warning-color: #fbbf24;
-      --warning-bg: #453015;
-      --success-color: #34d399;
-      --success-bg: #143e2f;
-      --shadow-color: rgba(0, 0, 0, 0.3);
-    }
-
     /* Thiết lập nền và font chữ */
     body {
       margin: 0;
-      padding: 1.5rem;
+      padding: 0.5rem;
       padding-bottom: 5rem;
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -52,7 +37,9 @@
       transition: background-color 0.3s, color 0.3s;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
     }
 
@@ -65,18 +52,27 @@
       margin-bottom: 0.2rem;
     }
 
+    .lockable-title {
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .lockable-title:hover {
+      color: var(--danger-color);
+    }
+
     .author {
       font-style: normal;
       font-size: 1.2rem;
       text-align: right;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       color: var(--primary-color);
     }
 
     h2 {
       font-size: 1.3rem;
       font-weight: bold;
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       margin-bottom: 1rem;
       border-bottom: 2px solid var(--border-color);
       padding-bottom: 0.3rem;
@@ -93,9 +89,9 @@
     .card {
       background-color: var(--card-bg);
       border: 2px solid var(--border-color);
-      padding: 1.5rem;
+      padding: 0.5rem;
       border-radius: 0.6rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       box-shadow: 0 4px 6px var(--shadow-color);
       transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
     }
@@ -107,7 +103,10 @@
       margin-bottom: 0.4rem;
     }
 
-    input, select, textarea, button {
+    input,
+    select,
+    textarea,
+    button {
       font-size: 1.1rem;
       font-family: inherit;
       padding: 0.6rem;
@@ -120,7 +119,9 @@
       transition: border-color 0.2s, background-color 0.3s;
     }
 
-    input:focus, select:focus, textarea:focus {
+    input:focus,
+    select:focus,
+    textarea:focus {
       border-color: var(--primary-color);
       outline: none;
     }
@@ -189,14 +190,15 @@
     .grid-2 {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     @media (min-width: 48rem) {
       .grid-2 {
         flex-direction: row;
       }
-      .grid-2 > * {
+
+      .grid-2>* {
         flex: 1;
       }
     }
@@ -215,8 +217,13 @@
     }
 
     @keyframes pulse-border {
-      from { border-color: var(--danger-color); }
-      to { border-color: transparent; }
+      from {
+        border-color: var(--danger-color);
+      }
+
+      to {
+        border-color: transparent;
+      }
     }
 
     .emergency-btn {
@@ -239,7 +246,7 @@
 
     /* Biểu đồ SVG */
     .chart-box {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .chart-title {
@@ -310,8 +317,9 @@
       text-align: left;
     }
 
-    th, td {
-      padding: 0.8rem;
+    th,
+    td {
+      padding: 0.5rem;
       border-bottom: 2px solid var(--border-color);
     }
 
@@ -326,7 +334,7 @@
 
     /* Kết quả chẩn đoán */
     .result-box {
-      padding: 1rem;
+      padding: 0.5rem;
       border-radius: 0.4rem;
       border: 2px solid var(--border-color);
       margin-top: 1rem;
@@ -360,7 +368,7 @@
 
     .accordion-header {
       background-color: var(--bg-color);
-      padding: 1rem;
+      padding: 0.5rem;
       font-weight: bold;
       cursor: pointer;
       display: flex;
@@ -370,7 +378,7 @@
     }
 
     .accordion-content {
-      padding: 1rem;
+      padding: 0.5rem;
       border-top: 2px solid var(--border-color);
       display: none;
       background-color: var(--card-bg);
@@ -381,13 +389,15 @@
     }
 
     /* Màn hình khóa và Thiết lập mật khẩu */
-    .lock-screen, .setup-screen {
+    .lock-screen,
+    .setup-screen {
       max-width: 25rem;
-      margin: 5rem auto;
-      padding: 2rem;
+      margin: 1rem auto;
+      padding: 1rem;
     }
 
-    .lock-screen h2, .setup-screen h2 {
+    .lock-screen h2,
+    .setup-screen h2 {
       text-align: center;
       border-bottom: none;
     }
@@ -400,7 +410,8 @@
       margin-top: 1rem;
     }
 
-    .backup-group > button, .backup-group > label {
+    .backup-group>button,
+    .backup-group>label {
       flex: 1;
       min-width: 8rem;
       margin-bottom: 0;
@@ -467,28 +478,38 @@
 
     /* Keyframe cho bảng thông báo tự viết */
     @keyframes slide-down {
-      from { transform: translateY(-2rem); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+      from {
+        transform: translateY(-2rem);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <!-- TIÊU ĐỀ CHÍNH -->
-  <h1>Huyết Áp Của Bạn</h1>
+  <h1 onclick="lockApp()" class="lockable-title" onmouseover="showTitleTooltip(event)" onmouseout="hideTooltip()"
+    title="Nhấp vào để khoá ứng dụng">Huyết Áp Của Bạn</h1>
   <div class="author">D.T.Chánh</div>
 
   <!-- MÀN HÌNH THIẾT LẬP MẬT KHẨU LẦN ĐẦU -->
   <div id="setup_view" class="card setup-screen" style="display: none;">
     <h2>Thiết Lập Bảo Mật</h2>
-    <p>Chào mừng bạn! Vui lòng thiết lập mật khẩu để mã hoá lịch sử đo huyết áp và bảo vệ dữ liệu cá nhân của bạn trên thiết bị này.</p>
-    
+    <p>Chào mừng bạn! Vui lòng thiết lập mật khẩu để mã hoá lịch sử đo huyết áp và bảo vệ dữ liệu cá nhân của bạn trên
+      thiết bị này.</p>
+
     <label for="setup_password">Nhập mật khẩu mới:</label>
     <input type="password" id="setup_password" placeholder="Mật khẩu của bạn...">
-    
+
     <label for="setup_phone">Số điện thoại khẩn cấp của bác sĩ (tuỳ chọn):</label>
     <input type="text" id="setup_phone" placeholder="Nhập số điện thoại bác sĩ (ví dụ: 0901234567)...">
-    
+
     <button onclick="handleSetup()">Hoàn tất & Khởi tạo</button>
   </div>
 
@@ -496,48 +517,39 @@
   <div id="lock_view" class="card lock-screen" style="display: none;">
     <h2>Ứng Dụng Đã Khoá</h2>
     <p>Vui lòng nhập mật khẩu giải mã để truy cập lịch sử đo huyết áp của bạn.</p>
-    
+
     <label for="unlock_password">Nhập mật khẩu:</label>
     <input type="password" id="unlock_password" placeholder="Mật khẩu của bạn..." onkeypress="handleUnlockEnter(event)">
-    
+
     <button onclick="handleUnlock()">Mở khoá dữ liệu</button>
   </div>
 
   <!-- GIAO DIỆN CHÍNH SAU KHI ĐÃ ĐĂNG NHẬP -->
   <div id="main_view" style="display: none;">
-    
+
     <!-- THANH CẢNH BÁO NGUY KỊCH -->
     <div id="emergency_banner" class="emergency-bar" style="display: none;">
-      CẢNH BÁO NGUY KỊCH: Phát hiện chỉ số huyết áp bất thường nguy hiểm! 
+      CẢNH BÁO NGUY KỊCH: Phát hiện chỉ số huyết áp bất thường nguy hiểm!
       <br>
-      <a id="emergency_call_btn" href="#" class="emergency-btn" onclick="handleCallClick(event, emergencyPhone)">Gọi Cấp Cứu / Bác Sĩ Ngay</a>
+      <a id="emergency_call_btn" href="#" class="emergency-btn" onclick="handleCallClick(event, emergencyPhone)">Gọi Cấp
+        Cứu / Bác Sĩ Ngay</a>
     </div>
 
-    <!-- HÀNG ĐIỀU KHIỂN CHUNG (THEME & LOCK) -->
-    <div class="card" style="padding: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
-      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
-        <!-- Số điện thoại bác sĩ và nút gọi nằm ở đầu -->
-        <label for="emergency_phone_input" style="margin-bottom: 0;">SĐT Bác sĩ:</label>
-        <input type="text" id="emergency_phone_input" oninput="handlePhoneInput(event)" onkeypress="handlePhoneKeyPress(event)" style="margin-bottom: 0; width: 10rem; padding: 0.4rem; border: 2px solid var(--border-color); border-radius: 0.4rem;">
-        <button id="direct_call_btn" onclick="handleCallOrSaveClick(event)" class="call-btn" style="display: none;">📞 Gọi</button>
-
-        <!-- Chế độ giao diện nằm ở giữa -->
-        <label for="theme_mode" style="margin-bottom: 0; margin-left: 1.5rem;">Giao diện:</label>
-        <select id="theme_mode" onchange="changeTheme()" style="margin-bottom: 0; width: 6.5rem; padding: 0.4rem; border: 2px solid var(--border-color); border-radius: 0.4rem;">
-          <option value="light">Sáng</option>
-          <option value="dark">Tối</option>
-          <option value="auto">Tự động</option>
-        </select>
-      </div>
-      <div>
-        <button onclick="lockApp()" class="secondary" style="margin-bottom: 0; padding: 0.4rem 1rem;">Khoá ứng dụng</button>
-      </div>
+    <!-- HÀNG ĐIỀU KHIỂN CHUNG (SĐT BÁC SĨ) -->
+    <div class="card" style="padding: 1rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+      <label for="emergency_phone_input" style="margin-bottom: 0;">SĐT Bác sĩ:</label>
+      <input type="text" id="emergency_phone_input" oninput="handlePhoneInput(event)"
+        onkeypress="handlePhoneKeyPress(event)"
+        style="margin-bottom: 0; width: 10rem; padding: 0.4rem; border: 2px solid var(--border-color); border-radius: 0.4rem;">
+      <button id="direct_call_btn" onclick="handleCallOrSaveClick(event)" class="call-btn" style="display: none;">📞
+        Gọi</button>
     </div>
 
     <!-- YÊU CẦU NẠP FILE HƯỚNG DẪN (NẾU CHẠY FILE:// VÀ CHƯA CÓ TRONG LOCALSTORAGE) -->
     <div id="json_loader_card" class="card" style="display: none;">
       <h3>Nạp Tập Tin Hướng Dẫn & Chẩn Đoán</h3>
-      <p>Do chính sách bảo mật của trình duyệt khi chạy trực tiếp file HTML offline (`file://`), ứng dụng không thể tự động nạp tệp `huong-dan.json`. Bạn vui lòng chọn file `huong-dan.json` để hoàn tất thiết lập.</p>
+      <p>Do chính sách bảo mật của trình duyệt khi chạy trực tiếp file HTML offline (`file://`), ứng dụng không thể tự
+        động nạp tệp `huong-dan.json`. Bạn vui lòng chọn file `huong-dan.json` để hoàn tất thiết lập.</p>
       <input type="file" id="json_file_input" accept=".json" onchange="loadJSONFromFile(event)">
     </div>
 
@@ -557,19 +569,19 @@
           <form id="record_form" onsubmit="handleNewRecord(event)">
             <label for="input_sys">Huyết áp Tâm Thu (SYS - số trên) [mmHg]:</label>
             <input type="number" id="input_sys" required min="30" max="300" placeholder="Ví dụ: 120">
-            
+
             <label for="input_dia">Huyết áp Tâm Trương (DIA - số dưới) [mmHg]:</label>
             <input type="number" id="input_dia" required min="30" max="200" placeholder="Ví dụ: 80">
-            
+
             <label for="input_pul">Nhịp tim (PUL) [lần/phút]:</label>
             <input type="number" id="input_pul" required min="30" max="250" placeholder="Ví dụ: 75">
-            
+
             <label for="input_datetime">Ngày và giờ đo:</label>
             <input type="datetime-local" id="input_datetime" required>
-            
+
             <label for="input_note">Ghi chú thêm (hoạt động trước khi đo, triệu chứng...):</label>
             <textarea id="input_note" rows="2" placeholder="Ví dụ: sau khi đi bộ, cảm thấy hơi chóng mặt..."></textarea>
-            
+
             <button type="submit">Phân Tích & Lưu Kết Quả</button>
           </form>
         </div>
@@ -583,7 +595,7 @@
               <p class="diag-title" style="font-weight: bold;"></p>
               <p class="diag-text"></p>
             </div>
-            
+
             <div id="diag_diff" class="result-box" style="margin-top: 1rem;">
               <h3>Hiệu số Huyết áp</h3>
               <p class="diag-title" style="font-weight: bold;"></p>
@@ -617,7 +629,7 @@
             <text x="50%" y="50%" text-anchor="middle" fill="var(--text-color)">Chưa có dữ liệu vẽ biểu đồ</text>
           </svg>
         </div>
-        
+
         <div class="card chart-box">
           <div class="chart-title">
             <span>Biểu Đồ Nhịp Tim (PUL)</span>
@@ -632,14 +644,15 @@
       <!-- SAO LƯU DỮ LIỆU -->
       <div class="card">
         <h2>Công Cụ Dữ Liệu</h2>
-        <p>Tất cả dữ liệu được lưu trữ mã hoá trên thiết bị này. Bạn nên xuất file dự phòng định kỳ để gửi cho bác sĩ hoặc khôi phục dữ liệu khi đổi trình duyệt/thiết bị.</p>
+        <p>Tất cả dữ liệu được lưu trữ mã hoá trên thiết bị này. Bạn nên xuất file dự phòng định kỳ để gửi cho bác sĩ
+          hoặc khôi phục dữ liệu khi đổi trình duyệt/thiết bị.</p>
         <div class="backup-group">
           <button onclick="exportData()" class="secondary">Xuất dữ liệu dự phòng (CSV)</button>
           <button onclick="copyCSVToClipboard()" class="secondary">Sao chép dữ liệu CSV</button>
-          
+
           <label for="import_file" class="file-input-label">Nhập dữ liệu dự phòng</label>
           <input type="file" id="import_file" accept=".csv,.txt" style="display: none;" onchange="importData(event)">
-          
+
           <button onclick="clearHistory()" class="danger">Xoá toàn bộ lịch sử</button>
         </div>
       </div>
@@ -686,19 +699,31 @@
   <div id="chart_tooltip" class="tooltip"></div>
 
   <!-- BẢNG THÔNG BÁO TỰ VIẾT (ĐỒNG BỘ GIAO DIỆN) -->
-  <div id="custom_alert_modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 5rem;">
-    <div class="card" style="width: calc(100% - 3rem); max-width: 25rem; box-shadow: 0 10px 15px var(--shadow-color); border: 2px solid var(--border-color); animation: slide-down 0.2s ease-out;">
-      <h3 style="margin-top: 0; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--primary-color);">Thông báo</h3>
-      <p id="custom_alert_message" style="margin-top: 1rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: normal;"></p>
-      <button onclick="closeAlert()" style="margin-bottom: 0; background-color: var(--primary-color); color: white; border: none; font-weight: bold; padding: 0.6rem; border-radius: 0.4rem; cursor: pointer; width: 100%;">Đồng ý</button>
+  <div id="custom_alert_modal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 5rem;">
+    <div class="card"
+      style="width: calc(100% - 3rem); max-width: 25rem; box-shadow: 0 10px 15px var(--shadow-color); border: 2px solid var(--border-color); animation: slide-down 0.2s ease-out;">
+      <h3
+        style="margin-top: 0; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--primary-color);">
+        Thông báo</h3>
+      <p id="custom_alert_message"
+        style="margin-top: 1rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: normal;"></p>
+      <button onclick="closeAlert()"
+        style="margin-bottom: 0; background-color: var(--primary-color); color: white; border: none; font-weight: bold; padding: 0.6rem; border-radius: 0.4rem; cursor: pointer; width: 100%;">Đồng
+        ý</button>
     </div>
   </div>
 
   <!-- BẢNG XÁC NHẬN TỰ VIẾT (ĐỒNG BỘ GIAO DIỆN) -->
-  <div id="custom_confirm_modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 5rem;">
-    <div class="card" style="width: calc(100% - 3rem); max-width: 25rem; box-shadow: 0 10px 15px var(--shadow-color); border: 2px solid var(--border-color); animation: slide-down 0.2s ease-out;">
-      <h3 style="margin-top: 0; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--danger-color);">Xác nhận</h3>
-      <p id="custom_confirm_message" style="margin-top: 1rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: normal;"></p>
+  <div id="custom_confirm_modal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 5rem;">
+    <div class="card"
+      style="width: calc(100% - 3rem); max-width: 25rem; box-shadow: 0 10px 15px var(--shadow-color); border: 2px solid var(--border-color); animation: slide-down 0.2s ease-out;">
+      <h3
+        style="margin-top: 0; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--danger-color);">
+        Xác nhận</h3>
+      <p id="custom_confirm_message"
+        style="margin-top: 1rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: normal;"></p>
       <div style="display: flex; gap: 0.5rem;">
         <button id="custom_confirm_btn" class="danger" style="margin-bottom: 0; flex: 1;">Xác nhận</button>
         <button onclick="closeConfirm()" class="secondary" style="margin-bottom: 0; flex: 1;">Huỷ bỏ</button>
@@ -709,7 +734,7 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     // ĐÈ LÊN WINDOW.ALERT ĐỂ ĐỒNG BỘ GIAO DIỆN
-    window.alert = function(message) {
+    window.alert = function (message) {
       document.getElementById("custom_alert_message").textContent = message;
       document.getElementById("custom_alert_modal").style.display = "flex";
     };
@@ -741,7 +766,7 @@
     // BẮT ĐẦU CHƯƠNG TRÌNH KHI TẢI TRANG
     window.addEventListener("DOMContentLoaded", () => {
       // Gắn sự kiện click cho nút Xác nhận của Custom Confirm Modal
-      document.getElementById("custom_confirm_btn").onclick = function() {
+      document.getElementById("custom_confirm_btn").onclick = function () {
         if (confirmCallback) {
           confirmCallback();
         }
@@ -752,18 +777,6 @@
       const now = new Date();
       now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
       document.getElementById("input_datetime").value = now.toISOString().slice(0, 16);
-
-      // Nhận diện chế độ theme lưu trữ
-      const savedTheme = localStorage.getItem("theme_choice") || "auto";
-      document.getElementById("theme_mode").value = savedTheme;
-      applyTheme(savedTheme);
-
-      // Cập nhật chế độ Auto khi hệ thống thay đổi
-      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-        if (document.getElementById("theme_mode").value === "auto") {
-          applyTheme("auto");
-        }
-      });
 
       // Kiểm tra xem ứng dụng đã được thiết lập mật khẩu chưa
       if (!localStorage.getItem("verify_token")) {
@@ -776,6 +789,8 @@
       // Cố gắng tự động tải tệp huong-dan.json
       autoFetchJSON();
     });
+
+
 
     // CHUYỂN ĐỔI CHẾ ĐỘ VIEW TRÊN MÀN HÌNH
     function showView(viewId) {
@@ -811,7 +826,7 @@
     // THIẾT LẬP MẬT KHẨU LẦN ĐẦU
     function handleSetup() {
       const pwd = document.getElementById("setup_password").value.trim();
-      const phone = document.getElementById("setup_phone").value.trim() || "115";
+      const phone = document.getElementById("setup_phone").value.trim();
 
       if (!pwd) {
         alert("Vui lòng nhập mật khẩu bảo mật!");
@@ -872,7 +887,7 @@
       emergencyPhone = decrypt(phoneCipher, userPassword) || "";
       document.getElementById("emergency_call_btn").href = emergencyPhone ? "tel:" + emergencyPhone : "#";
       document.getElementById("emergency_phone_input").value = emergencyPhone;
-      
+
       // Đồng bộ nút gọi điện
       updateCallBtnState();
 
@@ -892,14 +907,14 @@
     // CẬP NHẬT SỐ ĐIỆN THOẠI KHẨN CẤP
     function updateEmergencyPhone() {
       const newPhone = document.getElementById("emergency_phone_input").value.trim();
-      
+
       emergencyPhone = newPhone;
       document.getElementById("emergency_call_btn").href = emergencyPhone ? "tel:" + emergencyPhone : "#";
 
       // Mã hoá và lưu lại vào localStorage
       const encryptedPhone = encrypt(emergencyPhone, userPassword);
       localStorage.setItem("emergency_phone", encryptedPhone);
-      
+
       // Đồng bộ trạng thái hiển thị nút Gọi/Lưu
       updateCallBtnState();
 
@@ -956,7 +971,7 @@
     function updateCallBtnState() {
       const btn = document.getElementById("direct_call_btn");
       const inputVal = document.getElementById("emergency_phone_input").value.trim();
-      
+
       if (inputVal !== emergencyPhone) {
         btn.textContent = "Lưu";
         btn.classList.add("save-style");
@@ -1032,7 +1047,7 @@
               document.getElementById("json_loader_card").style.display = "none";
               renderGuide();
               return;
-            } catch (e) {}
+            } catch (e) { }
           }
           // Hiển thị khung yêu cầu chọn file thủ công
           document.getElementById("json_loader_card").style.display = "block";
@@ -1045,7 +1060,7 @@
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         try {
           const data = JSON.parse(e.target.result);
           if (data && data.huong_dan_huyet_ap && data.chan_doan) {
@@ -1069,7 +1084,7 @@
     function switchTab(tabName) {
       const inputVal = document.getElementById("emergency_phone_input").value.trim();
       if (inputVal !== emergencyPhone) {
-        showConfirm("Bạn có thay đổi chưa lưu ở số điện thoại bác sĩ. Bạn có muốn lưu lại trước khi chuyển tab không?", function() {
+        showConfirm("Bạn có thay đổi chưa lưu ở số điện thoại bác sĩ. Bạn có muốn lưu lại trước khi chuyển tab không?", function () {
           updateEmergencyPhone();
           performTabSwitch(tabName);
         });
@@ -1097,10 +1112,10 @@
     // LOGIC CHẨN ĐOÁN DỰA TRÊN ĐIỀU KIỆN JSON
     function getDiagnosis(sys, dia, pul) {
       if (!guideData || !guideData.chan_doan) return null;
-      
+
       const chanDoanData = guideData.chan_doan;
       const diff = sys - dia;
-      
+
       let hieuSoRes = null;
       let huyetApRes = null;
       let nhipTimRes = null;
@@ -1131,7 +1146,7 @@
       for (let key of bpKeys) {
         if (!chanDoanData[key]) continue;
         const cond = chanDoanData[key].conditions;
-        
+
         const hasSysCond = cond.hasOwnProperty("sys_min") || cond.hasOwnProperty("sys_max");
         const hasDiaCond = cond.hasOwnProperty("dia_min") || cond.hasOwnProperty("dia_max");
 
@@ -1209,7 +1224,7 @@
     // NHẬP BẢN GHI ĐO MỚI
     function handleNewRecord(event) {
       event.preventDefault();
-      
+
       const sys = parseInt(document.getElementById("input_sys").value);
       const dia = parseInt(document.getElementById("input_dia").value);
       const pul = parseInt(document.getElementById("input_pul").value);
@@ -1228,11 +1243,11 @@
 
       // Xử lý chuyển đổi ngày giờ hiển thị theo chuẩn Việt Nam (DD/MM/YYYY HH:MM)
       const dt = new Date(datetimeInput);
-      const formattedDate = dt.getDate().toString().padStart(2, '0') + '/' + 
-                            (dt.getMonth() + 1).toString().padStart(2, '0') + '/' + 
-                            dt.getFullYear() + ' ' + 
-                            dt.getHours().toString().padStart(2, '0') + ':' + 
-                            dt.getMinutes().toString().padStart(2, '0');
+      const formattedDate = dt.getDate().toString().padStart(2, '0') + '/' +
+        (dt.getMonth() + 1).toString().padStart(2, '0') + '/' +
+        dt.getFullYear() + ' ' +
+        dt.getHours().toString().padStart(2, '0') + ':' +
+        dt.getMinutes().toString().padStart(2, '0');
 
       // Thực hiện chẩn đoán
       let diagResultText = { bpTitle: "N/A", bpText: "Chưa nạp cấu trúc hướng dẫn.", diffTitle: "N/A", diffText: "", pulTitle: "N/A", pulText: "" };
@@ -1315,7 +1330,7 @@
 
     // XOÁ TỪNG BẢN GHI LỊCH SỬ
     function deleteRecord(index) {
-      showConfirm("Bạn chắc chắn muốn xoá bản ghi đo ngày " + historyRecords[index].datetime + "?", function() {
+      showConfirm("Bạn chắc chắn muốn xoá bản ghi đo ngày " + historyRecords[index].datetime + "?", function () {
         historyRecords.splice(index, 1);
         saveHistory();
         updateUI();
@@ -1324,7 +1339,7 @@
 
     // XOÁ TOÀN BỘ LỊCH SỬ ĐO
     function clearHistory() {
-      showConfirm("CẢNH BÁO: Hành động này sẽ xoá sạch hoàn toàn dữ liệu đo của bạn và không thể khôi phục! Bạn có muốn tiếp tục không?", function() {
+      showConfirm("CẢNH BÁO: Hành động này sẽ xoá sạch hoàn toàn dữ liệu đo của bạn và không thể khôi phục! Bạn có muốn tiếp tục không?", function () {
         historyRecords = [];
         saveHistory();
         updateUI();
@@ -1348,7 +1363,7 @@
               r.bp_title = diag.huyet_ap ? diag.huyet_ap.title : "N/A";
               r.diff_title = diag.hieu_so ? diag.hieu_so.title : "N/A";
               r.pul_title = diag.nhip_tim ? diag.nhip_tim.title : "N/A";
-              
+
               const bpT = r.bp_title.toLowerCase();
               const diffT = r.diff_title.toLowerCase();
               if (bpT.includes("cấp cứu") || bpT.includes("kịch phát") || diffT.includes("kẹp")) {
@@ -1358,7 +1373,7 @@
           }
 
           const tr = document.createElement("tr");
-          
+
           // Kiểm tra xem bản ghi có phải khẩn cấp nguy hiểm không để hiển thị cảnh báo đỏ
           if (r.is_emergency) {
             tr.style.backgroundColor = "var(--danger-bg)";
@@ -1557,7 +1572,7 @@
       const tooltip = document.getElementById("chart_tooltip");
       tooltip.innerHTML = `<strong>${datetime}</strong><br>${valueText}`;
       tooltip.style.display = "block";
-      
+
       // Định vị vị trí tooltip gần con trỏ chuột
       tooltip.style.left = (event.pageX + 15) + "px";
       tooltip.style.top = (event.pageY - 10) + "px";
@@ -1565,6 +1580,15 @@
 
     function hideTooltip() {
       document.getElementById("chart_tooltip").style.display = "none";
+    }
+
+    function showTitleTooltip(event) {
+      if (userPassword === "") return;
+      const tooltip = document.getElementById("chart_tooltip");
+      tooltip.innerHTML = "Nhấp vào tiêu đề để khoá ứng dụng";
+      tooltip.style.display = "block";
+      tooltip.style.left = (event.pageX + 15) + "px";
+      tooltip.style.top = (event.pageY - 10) + "px";
     }
 
     // KẾT XUẤT SAO LƯU DỰ PHÒNG (CSV)
@@ -1619,7 +1643,7 @@
       if (!file) return;
 
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         const text = e.target.result;
         const lines = text.split("\n");
         let importedCount = 0;
@@ -1665,7 +1689,7 @@
                   bpTitle = diag.huyet_ap ? diag.huyet_ap.title : "N/A";
                   diffTitle = diag.hieu_so ? diag.hieu_so.title : "N/A";
                   pulTitle = diag.nhip_tim ? diag.nhip_tim.title : "N/A";
-                  
+
                   const bpT = bpTitle.toLowerCase();
                   const diffT = diffTitle.toLowerCase();
                   if (bpT.includes("cấp cứu") || bpT.includes("kịch phát") || diffT.includes("kẹp")) {
@@ -1716,7 +1740,7 @@
           alert("Không tìm thấy dữ liệu hợp lệ trong file sao lưu!");
         }
       };
-      
+
       reader.readAsText(file, "UTF-8");
       event.target.value = ""; // Đặt lại input để có thể nhập lại cùng một file
     }
@@ -1732,7 +1756,7 @@
       }
 
       const guides = guideData.huong_dan_huyet_ap;
-      
+
       // Các danh mục muốn dựng cẩm nang
       const sections = [
         { key: "khai_niem_chung", title: "1. Khái niệm về Huyết áp & Ký hiệu" },
@@ -1798,4 +1822,5 @@
     }
   </script>
 </body>
+
 </html>
