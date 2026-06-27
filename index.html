@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huyết Áp Của Bạn - D.T.Chánh</title>
+  <style>
+    :root {
+      --bg-color: #f8fafc;
+      --text-color: #1e293b;
+      --border-color: #cbd5e1;
+      --card-bg: #ffffff;
+      --primary-color: #3b82f6;
+      --primary-hover: #2563eb;
+      --danger-color: #ef4444;
+      --danger-bg: #fee2e2;
+      --warning-color: #f59e0b;
+      --warning-bg: #fef3c7;
+      --success-color: #10b981;
+      --success-bg: #d1fae5;
+      --shadow-color: rgba(148, 163, 184, 0.1);
+      --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #0f172a;
+      --text-color: #f1f5f9;
+      --border-color: #334155;
+      --card-bg: #1e293b;
+      --primary-color: #60a5fa;
+      --primary-hover: #3b82f6;
+      --danger-color: #f87171;
+      --danger-bg: #451a1a;
+      --warning-color: #fbbf24;
+      --warning-bg: #453015;
+      --success-color: #34d399;
+      --success-bg: #143e2f;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    /* Thiết lập nền và font chữ */
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      padding-bottom: 5rem;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-stack);
+      font-size: 1.1rem;
+      font-weight: normal;
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    /* Tiêu đề */
+    h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 0.2rem;
+    }
+
+    .author {
+      font-style: normal;
+      font-size: 1.2rem;
+      text-align: right;
+      margin-bottom: 1.5rem;
+      color: var(--primary-color);
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 0.3rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    /* Thẻ hiển thị (Cards) */
+    .card {
+      background-color: var(--card-bg);
+      border: 2px solid var(--border-color);
+      padding: 1.5rem;
+      border-radius: 0.6rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 6px var(--shadow-color);
+      transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    }
+
+    /* Inputs và Buttons */
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.4rem;
+    }
+
+    input, select, textarea, button {
+      font-size: 1.1rem;
+      font-family: inherit;
+      padding: 0.6rem;
+      border: 2px solid var(--border-color);
+      border-radius: 0.4rem;
+      background-color: var(--card-bg);
+      color: var(--text-color);
+      width: 100%;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s, background-color 0.3s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      font-weight: bold;
+      cursor: pointer;
+      border: 2px solid var(--primary-color);
+      transition: opacity 0.2s, background-color 0.2s;
+      margin-bottom: 0.5rem;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button.danger {
+      background-color: var(--danger-color);
+      border-color: var(--danger-color);
+    }
+
+    button.danger:hover {
+      opacity: 0.9;
+    }
+
+    button.secondary {
+      background-color: transparent;
+      color: var(--text-color);
+      border-color: var(--border-color);
+    }
+
+    button.secondary:hover {
+      background-color: var(--bg-color);
+    }
+
+    /* Hệ thống Tabs */
+    .tabs {
+      display: flex;
+      margin-bottom: 1.5rem;
+      gap: 0.5rem;
+    }
+
+    .tab-btn {
+      flex: 1;
+      margin-bottom: 0;
+      padding: 0.8rem;
+    }
+
+    .tab-btn.active {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+      color: #ffffff;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Thiết lập bố cục lưới (Grid) không dùng Container cứng */
+    .grid-2 {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 48rem) {
+      .grid-2 {
+        flex-direction: row;
+      }
+      .grid-2 > * {
+        flex: 1;
+      }
+    }
+
+    /* Thanh thông báo khẩn cấp */
+    .emergency-bar {
+      background-color: var(--danger-bg);
+      color: var(--danger-color);
+      padding: 1rem;
+      border-radius: 0.6rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid var(--danger-color);
+      font-weight: bold;
+      text-align: center;
+      animation: pulse-border 1.5s infinite alternate;
+    }
+
+    @keyframes pulse-border {
+      from { border-color: var(--danger-color); }
+      to { border-color: transparent; }
+    }
+
+    .emergency-btn {
+      display: inline-block;
+      background-color: var(--danger-color);
+      color: #ffffff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.4rem;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 0.5rem;
+      border: 2px solid var(--danger-color);
+      width: auto;
+    }
+
+    .emergency-btn:hover {
+      background-color: transparent;
+      color: var(--danger-color);
+    }
+
+    /* Biểu đồ SVG */
+    .chart-box {
+      margin-bottom: 1.5rem;
+    }
+
+    .chart-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: 16rem;
+      border: 2px solid var(--border-color);
+      background-color: var(--card-bg);
+      border-radius: 0.4rem;
+    }
+
+    .chart-grid {
+      stroke: var(--border-color);
+      stroke-width: 1px;
+      stroke-dasharray: 4 4;
+    }
+
+    .chart-axis {
+      stroke: var(--text-color);
+      stroke-width: 2px;
+    }
+
+    .chart-line-sys {
+      fill: none;
+      stroke: var(--danger-color);
+      stroke-width: 3px;
+    }
+
+    .chart-line-dia {
+      fill: none;
+      stroke: var(--primary-color);
+      stroke-width: 3px;
+    }
+
+    .chart-line-pul {
+      fill: none;
+      stroke: var(--warning-color);
+      stroke-width: 3px;
+    }
+
+    .chart-point {
+      cursor: pointer;
+    }
+
+    .chart-text {
+      font-size: 0.8rem;
+      fill: var(--text-color);
+    }
+
+    /* Bảng dữ liệu */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 2px solid var(--border-color);
+      border-radius: 0.4rem;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th, td {
+      padding: 0.8rem;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    th {
+      background-color: var(--bg-color);
+      font-weight: bold;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Kết quả chẩn đoán */
+    .result-box {
+      padding: 1rem;
+      border-radius: 0.4rem;
+      border: 2px solid var(--border-color);
+      margin-top: 1rem;
+    }
+
+    .result-box.danger {
+      background-color: var(--danger-bg);
+      border-color: var(--danger-color);
+      color: var(--danger-color);
+    }
+
+    .result-box.warning {
+      background-color: var(--warning-bg);
+      border-color: var(--warning-color);
+      color: var(--warning-color);
+    }
+
+    .result-box.success {
+      background-color: var(--success-bg);
+      border-color: var(--success-color);
+      color: var(--success-color);
+    }
+
+    /* Accordion trong cẩm nang */
+    .accordion-item {
+      border: 2px solid var(--border-color);
+      border-radius: 0.4rem;
+      margin-bottom: 0.8rem;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      background-color: var(--bg-color);
+      padding: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .accordion-content {
+      padding: 1rem;
+      border-top: 2px solid var(--border-color);
+      display: none;
+      background-color: var(--card-bg);
+    }
+
+    .accordion-content.active {
+      display: block;
+    }
+
+    /* Màn hình khóa và Thiết lập mật khẩu */
+    .lock-screen, .setup-screen {
+      max-width: 25rem;
+      margin: 5rem auto;
+      padding: 2rem;
+    }
+
+    .lock-screen h2, .setup-screen h2 {
+      text-align: center;
+      border-bottom: none;
+    }
+
+    /* Nhóm các nút sao lưu */
+    .backup-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .backup-group > button, .backup-group > label {
+      flex: 1;
+      min-width: 8rem;
+      margin-bottom: 0;
+    }
+
+    .file-input-label {
+      display: inline-block;
+      text-align: center;
+      background-color: transparent;
+      color: var(--text-color);
+      border: 2px solid var(--border-color);
+      border-radius: 0.4rem;
+      padding: 0.6rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .file-input-label:hover {
+      background-color: var(--bg-color);
+    }
+
+    /* Tooltip */
+    .tooltip {
+      position: absolute;
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      padding: 0.5rem;
+      border-radius: 0.4rem;
+      font-size: 0.9rem;
+      pointer-events: none;
+      display: none;
+      box-shadow: 0 4px 6px var(--shadow-color);
+      z-index: 10;
+    }
+
+    /* Nút gọi điện khẩn cấp nhanh */
+    .call-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--success-color);
+      color: #ffffff;
+      font-weight: bold;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.4rem;
+      border: 2px solid var(--success-color);
+      text-decoration: none;
+      cursor: pointer;
+      width: auto;
+      height: 2.3rem;
+      margin-bottom: 0;
+      transition: opacity 0.2s;
+    }
+
+    .call-btn:hover {
+      opacity: 0.9;
+    }
+
+    .call-btn.save-style {
+      background-color: var(--warning-color);
+      border-color: var(--warning-color);
+      color: #1e293b;
+    }
+
+    /* Keyframe cho bảng thông báo tự viết */
+    @keyframes slide-down {
+      from { transform: translateY(-2rem); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TIÊU ĐỀ CHÍNH -->
+  <h1>Huyết Áp Của Bạn</h1>
+  <div class="author">D.T.Chánh</div>
+
+  <!-- MÀN HÌNH THIẾT LẬP MẬT KHẨU LẦN ĐẦU -->
+  <div id="setup_view" class="card setup-screen" style="display: none;">
+    <h2>Thiết Lập Bảo Mật</h2>
+    <p>Chào mừng bạn! Vui lòng thiết lập mật khẩu để mã hoá lịch sử đo huyết áp và bảo vệ dữ liệu cá nhân của bạn trên thiết bị này.</p>
+    
+    <label for="setup_password">Nhập mật khẩu mới:</label>
+    <input type="password" id="setup_password" placeholder="Mật khẩu của bạn...">
+    
+    <label for="setup_phone">Số điện thoại khẩn cấp của bác sĩ (tuỳ chọn):</label>
+    <input type="text" id="setup_phone" placeholder="Nhập số điện thoại bác sĩ (ví dụ: 0901234567)...">
+    
+    <button onclick="handleSetup()">Hoàn tất & Khởi tạo</button>
+  </div>
+
+  <!-- MÀN HÌNH KHÓA TRUY CẬP -->
+  <div id="lock_view" class="card lock-screen" style="display: none;">
+    <h2>Ứng Dụng Đã Khoá</h2>
+    <p>Vui lòng nhập mật khẩu giải mã để truy cập lịch sử đo huyết áp của bạn.</p>
+    
+    <label for="unlock_password">Nhập mật khẩu:</label>
+    <input type="password" id="unlock_password" placeholder="Mật khẩu của bạn..." onkeypress="handleUnlockEnter(event)">
+    
+    <button onclick="handleUnlock()">Mở khoá dữ liệu</button>
+  </div>
+
+  <!-- GIAO DIỆN CHÍNH SAU KHI ĐÃ ĐĂNG NHẬP -->
+  <div id="main_view" style="display: none;">
+    
+    <!-- THANH CẢNH BÁO NGUY KỊCH -->
+    <div id="emergency_banner" class="emergency-bar" style="display: none;">
+      CẢNH BÁO NGUY KỊCH: Phát hiện chỉ số huyết áp bất thường nguy hiểm! 
+      <br>
+      <a id="emergency_call_btn" href="#" class="emergency-btn" onclick="handleCallClick(event, emergencyPhone)">Gọi Cấp Cứu / Bác Sĩ Ngay</a>
+    </div>
+
+    <!-- HÀNG ĐIỀU KHIỂN CHUNG (THEME & LOCK) -->
+    <div class="card" style="padding: 1rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+      <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+        <!-- Số điện thoại bác sĩ và nút gọi nằm ở đầu -->
+        <label for="emergency_phone_input" style="margin-bottom: 0;">SĐT Bác sĩ:</label>
+        <input type="text" id="emergency_phone_input" oninput="handlePhoneInput(event)" onkeypress="handlePhoneKeyPress(event)" style="margin-bottom: 0; width: 10rem; padding: 0.4rem; border: 2px solid var(--border-color); border-radius: 0.4rem;">
+        <button id="direct_call_btn" onclick="handleCallOrSaveClick(event)" class="call-btn" style="display: none;">📞 Gọi</button>
+
+        <!-- Chế độ giao diện nằm ở giữa -->
+        <label for="theme_mode" style="margin-bottom: 0; margin-left: 1.5rem;">Giao diện:</label>
+        <select id="theme_mode" onchange="changeTheme()" style="margin-bottom: 0; width: 6.5rem; padding: 0.4rem; border: 2px solid var(--border-color); border-radius: 0.4rem;">
+          <option value="light">Sáng</option>
+          <option value="dark">Tối</option>
+          <option value="auto">Tự động</option>
+        </select>
+      </div>
+      <div>
+        <button onclick="lockApp()" class="secondary" style="margin-bottom: 0; padding: 0.4rem 1rem;">Khoá ứng dụng</button>
+      </div>
+    </div>
+
+    <!-- YÊU CẦU NẠP FILE HƯỚNG DẪN (NẾU CHẠY FILE:// VÀ CHƯA CÓ TRONG LOCALSTORAGE) -->
+    <div id="json_loader_card" class="card" style="display: none;">
+      <h3>Nạp Tập Tin Hướng Dẫn & Chẩn Đoán</h3>
+      <p>Do chính sách bảo mật của trình duyệt khi chạy trực tiếp file HTML offline (`file://`), ứng dụng không thể tự động nạp tệp `huong-dan.json`. Bạn vui lòng chọn file `huong-dan.json` để hoàn tất thiết lập.</p>
+      <input type="file" id="json_file_input" accept=".json" onchange="loadJSONFromFile(event)">
+    </div>
+
+    <!-- HỆ THỐNG TABS -->
+    <div class="tabs">
+      <button id="tab_btn_do" class="tab-btn active" onclick="switchTab('do')">Nhập & Chẩn Đoán</button>
+      <button id="tab_btn_lichsu" class="tab-btn" onclick="switchTab('lichsu')">Lịch Sử & Biểu Đồ</button>
+      <button id="tab_btn_camnang" class="tab-btn" onclick="switchTab('camnang')">Cẩm Nang Tra Cứu</button>
+    </div>
+
+    <!-- TAB 1: NHẬP VÀ CHẨN ĐOÁN -->
+    <div id="tab_do" class="tab-content active">
+      <div class="grid-2">
+        <!-- FORM NHẬP -->
+        <div class="card">
+          <h2>Nhập Chỉ Số Đo</h2>
+          <form id="record_form" onsubmit="handleNewRecord(event)">
+            <label for="input_sys">Huyết áp Tâm Thu (SYS - số trên) [mmHg]:</label>
+            <input type="number" id="input_sys" required min="30" max="300" placeholder="Ví dụ: 120">
+            
+            <label for="input_dia">Huyết áp Tâm Trương (DIA - số dưới) [mmHg]:</label>
+            <input type="number" id="input_dia" required min="30" max="200" placeholder="Ví dụ: 80">
+            
+            <label for="input_pul">Nhịp tim (PUL) [lần/phút]:</label>
+            <input type="number" id="input_pul" required min="30" max="250" placeholder="Ví dụ: 75">
+            
+            <label for="input_datetime">Ngày và giờ đo:</label>
+            <input type="datetime-local" id="input_datetime" required>
+            
+            <label for="input_note">Ghi chú thêm (hoạt động trước khi đo, triệu chứng...):</label>
+            <textarea id="input_note" rows="2" placeholder="Ví dụ: sau khi đi bộ, cảm thấy hơi chóng mặt..."></textarea>
+            
+            <button type="submit">Phân Tích & Lưu Kết Quả</button>
+          </form>
+        </div>
+
+        <!-- PHẢN HỒI CHẨN ĐOÁN -->
+        <div class="card">
+          <h2>Kết Quả Phân Tích</h2>
+          <div id="diagnosis_result" style="display: none;">
+            <div id="diag_bp" class="result-box">
+              <h3>Tình trạng Huyết áp</h3>
+              <p class="diag-title" style="font-weight: bold;"></p>
+              <p class="diag-text"></p>
+            </div>
+            
+            <div id="diag_diff" class="result-box" style="margin-top: 1rem;">
+              <h3>Hiệu số Huyết áp</h3>
+              <p class="diag-title" style="font-weight: bold;"></p>
+              <p class="diag-text"></p>
+            </div>
+
+            <div id="diag_pul" class="result-box" style="margin-top: 1rem;">
+              <h3>Chỉ số Nhịp tim</h3>
+              <p class="diag-title" style="font-weight: bold;"></p>
+              <p class="diag-text"></p>
+            </div>
+          </div>
+          <div id="diagnosis_placeholder">
+            <p>Vui lòng nhập chỉ số và nhấn nút phân tích để nhận kết quả chẩn đoán y khoa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: LỊCH SỬ VÀ BIỂU ĐỒ -->
+    <div id="tab_lichsu" class="tab-content">
+      <!-- BIỂU ĐỒ -->
+      <div class="grid-2">
+        <div class="card chart-box">
+          <div class="chart-title">
+            <span>Biểu Đồ Xu Hướng Huyết Áp (SYS / DIA)</span>
+            <span style="font-size: 0.9rem; font-weight: normal; color: var(--danger-color);">● SYS</span>
+            <span style="font-size: 0.9rem; font-weight: normal; color: var(--primary-color);">● DIA</span>
+          </div>
+          <svg id="svg_bp_chart" class="chart-svg">
+            <text x="50%" y="50%" text-anchor="middle" fill="var(--text-color)">Chưa có dữ liệu vẽ biểu đồ</text>
+          </svg>
+        </div>
+        
+        <div class="card chart-box">
+          <div class="chart-title">
+            <span>Biểu Đồ Nhịp Tim (PUL)</span>
+            <span style="font-size: 0.9rem; font-weight: normal; color: var(--warning-color);">● PUL</span>
+          </div>
+          <svg id="svg_pul_chart" class="chart-svg">
+            <text x="50%" y="50%" text-anchor="middle" fill="var(--text-color)">Chưa có dữ liệu vẽ biểu đồ</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- SAO LƯU DỮ LIỆU -->
+      <div class="card">
+        <h2>Công Cụ Dữ Liệu</h2>
+        <p>Tất cả dữ liệu được lưu trữ mã hoá trên thiết bị này. Bạn nên xuất file dự phòng định kỳ để gửi cho bác sĩ hoặc khôi phục dữ liệu khi đổi trình duyệt/thiết bị.</p>
+        <div class="backup-group">
+          <button onclick="exportData()" class="secondary">Xuất dữ liệu dự phòng (CSV)</button>
+          <button onclick="copyCSVToClipboard()" class="secondary">Sao chép dữ liệu CSV</button>
+          
+          <label for="import_file" class="file-input-label">Nhập dữ liệu dự phòng</label>
+          <input type="file" id="import_file" accept=".csv,.txt" style="display: none;" onchange="importData(event)">
+          
+          <button onclick="clearHistory()" class="danger">Xoá toàn bộ lịch sử</button>
+        </div>
+      </div>
+
+      <!-- BẢNG LỊCH SỬ -->
+      <div class="card">
+        <h2>Lịch Sử Các Lần Đo</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Thời Gian</th>
+                <th>SYS / DIA (mmHg)</th>
+                <th>PUL (bpm)</th>
+                <th>Phân Độ Huyết Áp</th>
+                <th>Ghi Chú</th>
+                <th style="text-align: center;">Hành Động</th>
+              </tr>
+            </thead>
+            <tbody id="history_tbody">
+              <tr>
+                <td colspan="6" style="text-align: center;">Chưa có dữ liệu đo được lưu.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: CẨM NANG TRA CỨU -->
+    <div id="tab_camnang" class="tab-content">
+      <div class="card">
+        <h2>Cẩm Nang Hướng Dẫn Y Khoa</h2>
+        <p>Nội dung cẩm nang tra cứu chính thống được nạp tự động từ tệp dữ liệu y khoa chuẩn.</p>
+        <div id="accordion_container">
+          <p style="text-align: center;">Đang nạp cẩm nang hướng dẫn...</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TOOLTIP CHO BIỂU ĐỒ -->
+  <div id="chart_tooltip" class="tooltip"></div>
+
+  <!-- BẢNG THÔNG BÁO TỰ VIẾT (ĐỒNG BỘ GIAO DIỆN) -->
+  <div id="custom_alert_modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 5rem;">
+    <div class="card" style="width: calc(100% - 3rem); max-width: 25rem; box-shadow: 0 10px 15px var(--shadow-color); border: 2px solid var(--border-color); animation: slide-down 0.2s ease-out;">
+      <h3 style="margin-top: 0; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--primary-color);">Thông báo</h3>
+      <p id="custom_alert_message" style="margin-top: 1rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: normal;"></p>
+      <button onclick="closeAlert()" style="margin-bottom: 0; background-color: var(--primary-color); color: white; border: none; font-weight: bold; padding: 0.6rem; border-radius: 0.4rem; cursor: pointer; width: 100%;">Đồng ý</button>
+    </div>
+  </div>
+
+  <!-- BẢNG XÁC NHẬN TỰ VIẾT (ĐỒNG BỘ GIAO DIỆN) -->
+  <div id="custom_confirm_modal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; justify-content: center; align-items: flex-start; padding-top: 5rem;">
+    <div class="card" style="width: calc(100% - 3rem); max-width: 25rem; box-shadow: 0 10px 15px var(--shadow-color); border: 2px solid var(--border-color); animation: slide-down 0.2s ease-out;">
+      <h3 style="margin-top: 0; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--danger-color);">Xác nhận</h3>
+      <p id="custom_confirm_message" style="margin-top: 1rem; margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: normal;"></p>
+      <div style="display: flex; gap: 0.5rem;">
+        <button id="custom_confirm_btn" class="danger" style="margin-bottom: 0; flex: 1;">Xác nhận</button>
+        <button onclick="closeConfirm()" class="secondary" style="margin-bottom: 0; flex: 1;">Huỷ bỏ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // ĐÈ LÊN WINDOW.ALERT ĐỂ ĐỒNG BỘ GIAO DIỆN
+    window.alert = function(message) {
+      document.getElementById("custom_alert_message").textContent = message;
+      document.getElementById("custom_alert_modal").style.display = "flex";
+    };
+
+    function closeAlert() {
+      document.getElementById("custom_alert_modal").style.display = "none";
+    }
+
+    // HỆ THỐNG XÁC NHẬN TỰ VIẾT
+    let confirmCallback = null;
+
+    function showConfirm(message, onConfirm) {
+      document.getElementById("custom_confirm_message").textContent = message;
+      confirmCallback = onConfirm;
+      document.getElementById("custom_confirm_modal").style.display = "flex";
+    }
+
+    function closeConfirm() {
+      document.getElementById("custom_confirm_modal").style.display = "none";
+      confirmCallback = null;
+    }
+
+    // BIẾN TOÀN CỤC
+    let userPassword = "";
+    let emergencyPhone = "";
+    let historyRecords = [];
+    let guideData = null; // Chứa nội dung tệp huong-dan.json
+
+    // BẮT ĐẦU CHƯƠNG TRÌNH KHI TẢI TRANG
+    window.addEventListener("DOMContentLoaded", () => {
+      // Gắn sự kiện click cho nút Xác nhận của Custom Confirm Modal
+      document.getElementById("custom_confirm_btn").onclick = function() {
+        if (confirmCallback) {
+          confirmCallback();
+        }
+        closeConfirm();
+      };
+
+      // Thiết lập ngày giờ mặc định trong form là hiện tại
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      document.getElementById("input_datetime").value = now.toISOString().slice(0, 16);
+
+      // Nhận diện chế độ theme lưu trữ
+      const savedTheme = localStorage.getItem("theme_choice") || "auto";
+      document.getElementById("theme_mode").value = savedTheme;
+      applyTheme(savedTheme);
+
+      // Cập nhật chế độ Auto khi hệ thống thay đổi
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+        if (document.getElementById("theme_mode").value === "auto") {
+          applyTheme("auto");
+        }
+      });
+
+      // Kiểm tra xem ứng dụng đã được thiết lập mật khẩu chưa
+      if (!localStorage.getItem("verify_token")) {
+        showView("setup_view");
+      } else {
+        showView("lock_view");
+        document.getElementById("unlock_password").focus();
+      }
+
+      // Cố gắng tự động tải tệp huong-dan.json
+      autoFetchJSON();
+    });
+
+    // CHUYỂN ĐỔI CHẾ ĐỘ VIEW TRÊN MÀN HÌNH
+    function showView(viewId) {
+      document.getElementById("setup_view").style.display = "none";
+      document.getElementById("lock_view").style.display = "none";
+      document.getElementById("main_view").style.display = "none";
+      document.getElementById(viewId).style.display = "block";
+    }
+
+    // THUẬT TOÁN MÃ HOÁ/GIẢI MÃ ĐỐI XỨNG XOR + BASE64
+    function encrypt(text, key) {
+      let result = "";
+      for (let i = 0; i < text.length; i++) {
+        result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+      }
+      // Mã hoá Base64 an toàn cho chuỗi UTF-8 tiếng Việt
+      return btoa(unescape(encodeURIComponent(result)));
+    }
+
+    function decrypt(ciphertext, key) {
+      try {
+        let decoded = decodeURIComponent(escape(atob(ciphertext)));
+        let result = "";
+        for (let i = 0; i < decoded.length; i++) {
+          result += String.fromCharCode(decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
+        }
+        return result;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // THIẾT LẬP MẬT KHẨU LẦN ĐẦU
+    function handleSetup() {
+      const pwd = document.getElementById("setup_password").value.trim();
+      const phone = document.getElementById("setup_phone").value.trim() || "115";
+
+      if (!pwd) {
+        alert("Vui lòng nhập mật khẩu bảo mật!");
+        return;
+      }
+
+      userPassword = pwd;
+      emergencyPhone = phone;
+      historyRecords = [];
+
+      // Lưu trữ thông tin xác minh và giá trị ban đầu vào localStorage dưới dạng mã hoá
+      const token = encrypt("VERIFY_PASSWORD", userPassword);
+      const encPhone = encrypt(emergencyPhone, userPassword);
+      const encRecords = encrypt(JSON.stringify([]), userPassword);
+
+      localStorage.setItem("verify_token", token);
+      localStorage.setItem("emergency_phone", encPhone);
+      localStorage.setItem("history_records", encRecords);
+
+      document.getElementById("emergency_phone_input").value = emergencyPhone;
+      updateCallBtnState();
+      alert("Thiết lập mật khẩu thành công!");
+      unlockApplication();
+    }
+
+    // MỞ KHOÁ ỨNG DỤNG
+    function handleUnlockEnter(event) {
+      if (event.key === "Enter") {
+        handleUnlock();
+      }
+    }
+
+    // CẢI TIẾN TRÌNH GIẢI MÃ LỊCH SỬ KHI KHỞI CHẠY
+    function handleUnlock() {
+      const pwd = document.getElementById("unlock_password").value.trim();
+      if (!pwd) {
+        alert("Vui lòng nhập mật khẩu!");
+        return;
+      }
+
+      const tokenCipher = localStorage.getItem("verify_token");
+      const decToken = decrypt(tokenCipher, pwd);
+
+      if (decToken === "VERIFY_PASSWORD") {
+        userPassword = pwd;
+        unlockApplication();
+      } else {
+        alert("Mật khẩu không đúng! Vui lòng nhập lại.");
+        document.getElementById("unlock_password").value = "";
+        document.getElementById("unlock_password").focus();
+      }
+    }
+
+    // CÁC THAO TÁC KHI MỞ KHOÁ THÀNH CÔNG
+    function unlockApplication() {
+      // Đọc và giải mã số điện thoại khẩn cấp
+      const phoneCipher = localStorage.getItem("emergency_phone");
+      emergencyPhone = decrypt(phoneCipher, userPassword) || "";
+      document.getElementById("emergency_call_btn").href = emergencyPhone ? "tel:" + emergencyPhone : "#";
+      document.getElementById("emergency_phone_input").value = emergencyPhone;
+      
+      // Đồng bộ nút gọi điện
+      updateCallBtnState();
+
+      // Đọc và giải mã lịch sử đo
+      const recordsCipher = localStorage.getItem("history_records");
+      const recordsText = decrypt(recordsCipher, userPassword);
+      try {
+        historyRecords = JSON.parse(recordsText) || [];
+      } catch (e) {
+        historyRecords = [];
+      }
+
+      showView("main_view");
+      updateUI();
+    }
+
+    // CẬP NHẬT SỐ ĐIỆN THOẠI KHẨN CẤP
+    function updateEmergencyPhone() {
+      const newPhone = document.getElementById("emergency_phone_input").value.trim();
+      
+      emergencyPhone = newPhone;
+      document.getElementById("emergency_call_btn").href = emergencyPhone ? "tel:" + emergencyPhone : "#";
+
+      // Mã hoá và lưu lại vào localStorage
+      const encryptedPhone = encrypt(emergencyPhone, userPassword);
+      localStorage.setItem("emergency_phone", encryptedPhone);
+      
+      // Đồng bộ trạng thái hiển thị nút Gọi/Lưu
+      updateCallBtnState();
+
+      alert("Đã cập nhật số điện thoại bác sĩ thành công!");
+    }
+
+    // XỬ LÝ KHI NGƯỜI DÙNG ĐANG GÕ NHẬP SĐT
+    function handlePhoneInput(event) {
+      updateCallBtnState();
+    }
+
+    // LƯU KHI NHẤN ENTER
+    function handlePhoneKeyPress(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        updateEmergencyPhone();
+      }
+    }
+
+    // XỬ LÝ CLICK ĐA NĂNG (GỌI HOẶC LƯU)
+    function handleCallOrSaveClick(event) {
+      const btn = document.getElementById("direct_call_btn");
+      if (btn.classList.contains("save-style")) {
+        updateEmergencyPhone();
+      } else {
+        handleCallClick(event, emergencyPhone);
+      }
+    }
+
+    // XỬ LÝ CLICK GỌI ĐIỆN PHÙ HỢP VỚI THIẾT BỊ VÀ TRÁNH GỌI NHẦM
+    function handleCallClick(event, phoneNum) {
+      event.preventDefault(); // Chặn hành vi mở link mặc định của trình duyệt
+
+      if (!phoneNum || phoneNum.trim() === "") {
+        alert("Chưa thiết lập số điện thoại bác sĩ! Vui lòng nhập số điện thoại ở thanh cấu hình phía trên.");
+        return;
+      }
+
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (isMobile) {
+        window.location.href = "tel:" + phoneNum;
+      } else {
+        navigator.clipboard.writeText(phoneNum)
+          .then(() => {
+            alert("Bạn đang sử dụng máy tính. Số điện thoại của bác sĩ (" + phoneNum + ") đã được sao chép vào bộ nhớ đệm để bạn tiện liên lạc!");
+          })
+          .catch(() => {
+            alert("Số điện thoại của bác sĩ là: " + phoneNum);
+          });
+      }
+    }
+
+    // ĐỒNG BỘ TRẠNG THÁI HIỂN THỊ NÚT GỌI/LƯU
+    function updateCallBtnState() {
+      const btn = document.getElementById("direct_call_btn");
+      const inputVal = document.getElementById("emergency_phone_input").value.trim();
+      
+      if (inputVal !== emergencyPhone) {
+        btn.textContent = "Lưu";
+        btn.classList.add("save-style");
+        btn.style.display = "inline-flex";
+      } else {
+        btn.classList.remove("save-style");
+        if (!emergencyPhone || emergencyPhone.trim() === "") {
+          btn.style.display = "none";
+        } else {
+          btn.textContent = "📞 Gọi";
+          btn.style.display = "inline-flex";
+        }
+      }
+    }
+
+    // KHOÁ LẠI ỨNG DỤNG
+    function lockApp() {
+      userPassword = "";
+      historyRecords = [];
+      document.getElementById("unlock_password").value = "";
+      document.getElementById("setup_password").value = "";
+      showView("lock_view");
+      document.getElementById("unlock_password").focus();
+    }
+
+    // ĐỒNG BỘ CHỦ ĐỀ GIAO DIỆN (THEME)
+    function changeTheme() {
+      const mode = document.getElementById("theme_mode").value;
+      localStorage.setItem("theme_choice", mode);
+      applyTheme(mode);
+    }
+
+    function applyTheme(mode) {
+      if (mode === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      } else if (mode === "light") {
+        document.documentElement.removeAttribute("data-theme");
+      } else {
+        // Chế độ Auto (tự động theo hệ thống)
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (prefersDark) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.removeAttribute("data-theme");
+        }
+      }
+      // Vẽ lại biểu đồ nếu có dữ liệu để đồng bộ màu chữ của trục tọa độ
+      drawCharts();
+    }
+
+    // TỰ ĐỘNG TẢI FILE JSON
+    function autoFetchJSON() {
+      fetch("huong-dan.json")
+        .then(response => {
+          if (!response.ok) throw new Error("Không thể nạp file tự động");
+          return response.json();
+        })
+        .then(data => {
+          guideData = data;
+          localStorage.setItem("cache_guide_data", JSON.stringify(data));
+          document.getElementById("json_loader_card").style.display = "none";
+          renderGuide();
+          if (historyRecords.length > 0) {
+            updateUI(); // Vẽ lại giao diện nếu có lịch sử chờ chẩn đoán
+          }
+        })
+        .catch(err => {
+          // Nếu không nạp tự động được (CORS hoặc offline), kiểm tra xem trong localStorage đã có cache chưa
+          const cached = localStorage.getItem("cache_guide_data");
+          if (cached) {
+            try {
+              guideData = JSON.parse(cached);
+              document.getElementById("json_loader_card").style.display = "none";
+              renderGuide();
+              return;
+            } catch (e) {}
+          }
+          // Hiển thị khung yêu cầu chọn file thủ công
+          document.getElementById("json_loader_card").style.display = "block";
+        });
+    }
+
+    // CHỌN VÀ TẢI FILE JSON THỦ CÔNG
+    function loadJSONFromFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data && data.huong_dan_huyet_ap && data.chan_doan) {
+            guideData = data;
+            localStorage.setItem("cache_guide_data", JSON.stringify(data));
+            document.getElementById("json_loader_card").style.display = "none";
+            renderGuide();
+            alert("Nạp tệp dữ liệu hướng dẫn và chẩn đoán thành công!");
+            updateUI(); // Cập nhật lại chẩn đoán nếu trước đó chưa có dữ liệu cấu trúc
+          } else {
+            alert("Tập tin JSON không đúng định dạng chuẩn!");
+          }
+        } catch (err) {
+          alert("Lỗi khi đọc file JSON: " + err.message);
+        }
+      };
+      reader.readAsText(file, "UTF-8");
+    }
+
+    // ĐIỀU HƯỚNG TABS
+    function switchTab(tabName) {
+      const inputVal = document.getElementById("emergency_phone_input").value.trim();
+      if (inputVal !== emergencyPhone) {
+        showConfirm("Bạn có thay đổi chưa lưu ở số điện thoại bác sĩ. Bạn có muốn lưu lại trước khi chuyển tab không?", function() {
+          updateEmergencyPhone();
+          performTabSwitch(tabName);
+        });
+        return;
+      }
+      performTabSwitch(tabName);
+    }
+
+    function performTabSwitch(tabName) {
+      // Ẩn toàn bộ tab contents
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+      // Tắt trạng thái active trên các nút tab
+      document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
+
+      // Hiện nội dung tab và bật active nút tương ứng
+      document.getElementById("tab_" + tabName).classList.add("active");
+      document.getElementById("tab_btn_" + tabName).classList.add("active");
+
+      // Nếu chuyển sang tab lịch sử thì vẽ lại biểu đồ để đảm bảo kích thước co giãn chính xác
+      if (tabName === "lichsu") {
+        drawCharts();
+      }
+    }
+
+    // LOGIC CHẨN ĐOÁN DỰA TRÊN ĐIỀU KIỆN JSON
+    function getDiagnosis(sys, dia, pul) {
+      if (!guideData || !guideData.chan_doan) return null;
+      
+      const chanDoanData = guideData.chan_doan;
+      const diff = sys - dia;
+      
+      let hieuSoRes = null;
+      let huyetApRes = null;
+      let nhipTimRes = null;
+
+      // 1. Phân loại hiệu số huyết áp
+      const diffKeys = ["huyet_ap_kep", "hieu_so_can_kep", "hieu_so_binh_thuong", "hieu_so_can_rong", "hieu_so_rong"];
+      for (let key of diffKeys) {
+        if (!chanDoanData[key]) continue;
+        const cond = chanDoanData[key].conditions;
+        let match = true;
+        if (cond.hasOwnProperty("diff_min") && diff < cond.diff_min) match = false;
+        if (cond.hasOwnProperty("diff_max") && diff > cond.diff_max) match = false;
+        if (match) {
+          hieuSoRes = chanDoanData[key];
+          break;
+        }
+      }
+
+      // 2. Phân loại huyết áp (Duyệt theo mức độ nghiêm trọng giảm dần)
+      const bpKeys = [
+        "con_tang_huyet_ap_kich_phat",
+        "tang_huyet_ap_do_2",
+        "tang_huyet_ap_do_1",
+        "huyet_ap_thap",
+        "tien_tang_huyet_ap",
+        "huyet_ap_binh_thuong"
+      ];
+      for (let key of bpKeys) {
+        if (!chanDoanData[key]) continue;
+        const cond = chanDoanData[key].conditions;
+        
+        const hasSysCond = cond.hasOwnProperty("sys_min") || cond.hasOwnProperty("sys_max");
+        const hasDiaCond = cond.hasOwnProperty("dia_min") || cond.hasOwnProperty("dia_max");
+
+        let sysOk = true;
+        if (cond.hasOwnProperty("sys_min") && sys < cond.sys_min) sysOk = false;
+        if (cond.hasOwnProperty("sys_max") && sys > cond.sys_max) sysOk = false;
+
+        let diaOk = true;
+        if (cond.hasOwnProperty("dia_min") && dia < cond.dia_min) diaOk = false;
+        if (cond.hasOwnProperty("dia_max") && dia > cond.dia_max) diaOk = false;
+
+        let finalMatch = false;
+        if (cond.operator === "or") {
+          if (hasSysCond && hasDiaCond) {
+            finalMatch = sysOk || diaOk;
+          } else if (hasSysCond) {
+            finalMatch = sysOk;
+          } else if (hasDiaCond) {
+            finalMatch = diaOk;
+          } else {
+            finalMatch = true;
+          }
+        } else { // Toán tử "and"
+          if (hasSysCond && hasDiaCond) {
+            finalMatch = sysOk && diaOk;
+          } else if (hasSysCond) {
+            finalMatch = sysOk;
+          } else if (hasDiaCond) {
+            finalMatch = diaOk;
+          } else {
+            finalMatch = true;
+          }
+        }
+
+        if (finalMatch) {
+          huyetApRes = chanDoanData[key];
+          break;
+        }
+      }
+
+      // 3. Phân loại nhịp tim
+      const pulseKeys = ["nhip_tim_cham", "nhip_tim_binh_thuong", "nhip_tim_nhanh"];
+      for (let key of pulseKeys) {
+        if (!chanDoanData[key]) continue;
+        const cond = chanDoanData[key].conditions;
+        let match = true;
+        if (cond.hasOwnProperty("pul_min") && pul < cond.pul_min) match = false;
+        if (cond.hasOwnProperty("pul_max") && pul > cond.pul_max) match = false;
+        if (match) {
+          nhipTimRes = chanDoanData[key];
+          break;
+        }
+      }
+
+      return {
+        hieu_so: hieuSoRes,
+        huyet_ap: huyetApRes,
+        nhip_tim: nhipTimRes
+      };
+    }
+
+    // LẤY MÀU SẮC ĐẠI DIỆN PHÂN ĐỘ ĐỂ STYLE
+    function getStatusClass(title) {
+      if (!title) return "";
+      const t = title.toLowerCase();
+      if (t.includes("nguy kịch") || t.includes("kịch phát") || t.includes("nặng") || t.includes("cấp cứu")) {
+        return "danger";
+      }
+      if (t.includes("cảnh báo") || t.includes("nhẹ") || t.includes("tiền") || t.includes("thấp") || t.includes("cận")) {
+        return "warning";
+      }
+      return "success";
+    }
+
+    // NHẬP BẢN GHI ĐO MỚI
+    function handleNewRecord(event) {
+      event.preventDefault();
+      
+      const sys = parseInt(document.getElementById("input_sys").value);
+      const dia = parseInt(document.getElementById("input_dia").value);
+      const pul = parseInt(document.getElementById("input_pul").value);
+      const datetimeInput = document.getElementById("input_datetime").value;
+      const note = document.getElementById("input_note").value.trim();
+
+      if (isNaN(sys) || isNaN(dia) || isNaN(pul) || !datetimeInput) {
+        alert("Vui lòng điền đầy đủ và đúng định dạng các trường thông tin!");
+        return;
+      }
+
+      if (sys <= dia) {
+        alert("Huyết áp Tâm Thu (số trên) phải lớn hơn huyết áp Tâm Trương (số dưới)!");
+        return;
+      }
+
+      // Xử lý chuyển đổi ngày giờ hiển thị theo chuẩn Việt Nam (DD/MM/YYYY HH:MM)
+      const dt = new Date(datetimeInput);
+      const formattedDate = dt.getDate().toString().padStart(2, '0') + '/' + 
+                            (dt.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+                            dt.getFullYear() + ' ' + 
+                            dt.getHours().toString().padStart(2, '0') + ':' + 
+                            dt.getMinutes().toString().padStart(2, '0');
+
+      // Thực hiện chẩn đoán
+      let diagResultText = { bpTitle: "N/A", bpText: "Chưa nạp cấu trúc hướng dẫn.", diffTitle: "N/A", diffText: "", pulTitle: "N/A", pulText: "" };
+      let isEmergency = false;
+
+      if (guideData) {
+        const diag = getDiagnosis(sys, dia, pul);
+        if (diag) {
+          diagResultText = {
+            bpTitle: diag.huyet_ap ? diag.huyet_ap.title : "N/A",
+            bpText: diag.huyet_ap ? diag.huyet_ap.text : "",
+            diffTitle: diag.hieu_so ? diag.hieu_so.title : "N/A",
+            diffText: diag.hieu_so ? diag.hieu_so.text : "",
+            pulTitle: diag.nhip_tim ? diag.nhip_tim.title : "N/A",
+            pulText: diag.nhip_tim ? diag.nhip_tim.text : ""
+          };
+
+          // Kiểm tra xem có cảnh báo đỏ khẩn cấp không
+          const bpT = diagResultText.bpTitle.toLowerCase();
+          const diffT = diagResultText.diffTitle.toLowerCase();
+          if (bpT.includes("cấp cứu") || bpT.includes("kịch phát") || diffT.includes("kẹp")) {
+            isEmergency = true;
+          }
+        }
+      }
+
+      // Cập nhật giao diện kết quả chẩn đoán nhanh
+      document.getElementById("diagnosis_placeholder").style.display = "none";
+      const diagView = document.getElementById("diagnosis_result");
+      diagView.style.display = "block";
+
+      // 1. Chỉ số huyết áp
+      const boxBp = document.getElementById("diag_bp");
+      boxBp.className = "result-box " + getStatusClass(diagResultText.bpTitle);
+      boxBp.querySelector(".diag-title").textContent = diagResultText.bpTitle;
+      boxBp.querySelector(".diag-text").textContent = diagResultText.bpText;
+
+      // 2. Chỉ số hiệu số
+      const boxDiff = document.getElementById("diag_diff");
+      boxDiff.className = "result-box " + getStatusClass(diagResultText.diffTitle);
+      boxDiff.querySelector(".diag-title").textContent = diagResultText.diffTitle;
+      boxDiff.querySelector(".diag-text").textContent = diagResultText.diffText;
+
+      // 3. Chỉ số nhịp tim
+      const boxPul = document.getElementById("diag_pul");
+      boxPul.className = "result-box " + getStatusClass(diagResultText.pulTitle);
+      boxPul.querySelector(".diag-title").textContent = diagResultText.pulTitle;
+      boxPul.querySelector(".diag-text").textContent = diagResultText.pulText;
+
+      // Lưu trữ bản ghi mới vào mảng lịch sử
+      const newRecord = {
+        datetime: formattedDate,
+        sys: sys,
+        dia: dia,
+        pul: pul,
+        note: note,
+        bp_title: diagResultText.bpTitle,
+        diff_title: diagResultText.diffTitle,
+        pul_title: diagResultText.pulTitle,
+        is_emergency: isEmergency
+      };
+
+      historyRecords.unshift(newRecord); // Cho lên đầu tiên
+
+      // Lưu trữ mã hoá xuống localStorage
+      saveHistory();
+
+      // Làm sạch ghi chú của biểu mẫu
+      document.getElementById("input_note").value = "";
+
+      // Cập nhật lại bảng lịch sử và biểu đồ
+      updateUI();
+    }
+
+    // LƯU LỊCH SỬ ĐÃ MÃ HOÁ XUỐNG LOCALSTORAGE
+    function saveHistory() {
+      const encrypted = encrypt(JSON.stringify(historyRecords), userPassword);
+      localStorage.setItem("history_records", encrypted);
+    }
+
+    // XOÁ TỪNG BẢN GHI LỊCH SỬ
+    function deleteRecord(index) {
+      showConfirm("Bạn chắc chắn muốn xoá bản ghi đo ngày " + historyRecords[index].datetime + "?", function() {
+        historyRecords.splice(index, 1);
+        saveHistory();
+        updateUI();
+      });
+    }
+
+    // XOÁ TOÀN BỘ LỊCH SỬ ĐO
+    function clearHistory() {
+      showConfirm("CẢNH BÁO: Hành động này sẽ xoá sạch hoàn toàn dữ liệu đo của bạn và không thể khôi phục! Bạn có muốn tiếp tục không?", function() {
+        historyRecords = [];
+        saveHistory();
+        updateUI();
+      });
+    }
+
+    // CẬP NHẬT TOÀN BỘ GIAO DIỆN
+    function updateUI() {
+      // 1. Cập nhật Bảng lịch sử
+      const tbody = document.getElementById("history_tbody");
+      tbody.innerHTML = "";
+
+      if (historyRecords.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Chưa có dữ liệu đo được lưu.</td></tr>';
+      } else {
+        historyRecords.forEach((r, index) => {
+          // Thực hiện chạy lại chẩn đoán cho từng bản ghi cũ nếu chưa được gán nhãn chẩn đoán (ví dụ do nạp file JSON muộn)
+          if (guideData && (!r.bp_title || r.bp_title === "N/A")) {
+            const diag = getDiagnosis(r.sys, r.dia, r.pul);
+            if (diag) {
+              r.bp_title = diag.huyet_ap ? diag.huyet_ap.title : "N/A";
+              r.diff_title = diag.hieu_so ? diag.hieu_so.title : "N/A";
+              r.pul_title = diag.nhip_tim ? diag.nhip_tim.title : "N/A";
+              
+              const bpT = r.bp_title.toLowerCase();
+              const diffT = r.diff_title.toLowerCase();
+              if (bpT.includes("cấp cứu") || bpT.includes("kịch phát") || diffT.includes("kẹp")) {
+                r.is_emergency = true;
+              }
+            }
+          }
+
+          const tr = document.createElement("tr");
+          
+          // Kiểm tra xem bản ghi có phải khẩn cấp nguy hiểm không để hiển thị cảnh báo đỏ
+          if (r.is_emergency) {
+            tr.style.backgroundColor = "var(--danger-bg)";
+            tr.style.color = "var(--danger-color)";
+          }
+
+          tr.innerHTML = `
+            <td>${r.datetime}</td>
+            <td><strong>${r.sys}</strong> / <strong>${r.dia}</strong></td>
+            <td>${r.pul}</td>
+            <td><span style="font-weight: bold;">${r.bp_title || 'Chưa phân tích'}</span></td>
+            <td><span style="font-size: 0.9rem;">${r.note || '-'}</span></td>
+            <td style="text-align: center;">
+              <button onclick="deleteRecord(${index})" class="danger" style="padding: 0.2rem 0.5rem; font-size: 0.9rem; margin-bottom: 0; width: auto;">Xoá</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // 2. Cảnh báo Banner Khẩn cấp (Nếu bản ghi đo mới nhất ở trạng thái nguy hiểm)
+      const banner = document.getElementById("emergency_banner");
+      if (historyRecords.length > 0 && historyRecords[0].is_emergency) {
+        banner.style.display = "block";
+      } else {
+        banner.style.display = "none";
+      }
+
+      // 3. Vẽ lại các biểu đồ
+      drawCharts();
+    }
+
+    // VẼ BIỂU ĐỒ BẰNG SVG TỰ SINH (OFFLINE 100%)
+    function drawCharts() {
+      const svgBp = document.getElementById("svg_bp_chart");
+      const svgPul = document.getElementById("svg_pul_chart");
+
+      // Nếu không có dữ liệu đo, hiển thị dòng chữ thông báo
+      if (historyRecords.length === 0) {
+        const textElement = `<text x="50%" y="50%" text-anchor="middle" fill="var(--text-color)">Chưa có dữ liệu để vẽ biểu đồ</text>`;
+        svgBp.innerHTML = textElement;
+        svgPul.innerHTML = textElement;
+        return;
+      }
+
+      // Lấy tối đa 15 lần đo gần nhất để vẽ (và lật ngược lại theo thứ tự thời gian cũ trước mới sau)
+      const chartData = historyRecords.slice(0, 15).reverse();
+      const n = chartData.length;
+
+      // Kích thước chuẩn hoá của SVG
+      const width = 800;
+      const height = 300;
+      const paddingLeft = 50;
+      const paddingRight = 20;
+      const paddingTop = 30;
+      const paddingBottom = 40;
+      const plotWidth = width - paddingLeft - paddingRight;
+      const plotHeight = height - paddingTop - paddingBottom;
+
+      // Bước nhảy trục hoành
+      const xStep = n > 1 ? plotWidth / (n - 1) : plotWidth;
+
+      // ----------------------------------------------------
+      // BIỂU ĐỒ HUYẾT ÁP (SYS & DIA)
+      // ----------------------------------------------------
+      let maxSys = 160;
+      let minDia = 60;
+      chartData.forEach(r => {
+        if (r.sys > maxSys) maxSys = r.sys;
+        if (r.dia < minDia) minDia = r.dia;
+      });
+      maxSys += 10;
+      minDia = Math.max(30, minDia - 10);
+
+      const yBpScale = (val) => height - paddingBottom - ((val - minDia) / (maxSys - minDia)) * plotHeight;
+
+      // Khởi tạo các thành phần đồ hoạ cho biểu đồ Huyết áp
+      let bpContent = "";
+
+      // 1. Vẽ các đường lưới nằm ngang (Grid)
+      const gridLevels = 4;
+      for (let i = 0; i <= gridLevels; i++) {
+        const val = Math.round(minDia + (i / gridLevels) * (maxSys - minDia));
+        const y = yBpScale(val);
+        bpContent += `<line x1="${paddingLeft}" y1="${y}" x2="${width - paddingRight}" y2="${y}" class="chart-grid" />`;
+        bpContent += `<text x="${paddingLeft - 8}" y="${y + 4}" text-anchor="end" class="chart-text" fill="var(--text-color)">${val}</text>`;
+      }
+
+      // 2. Tạo toạ độ cho các đường dẫn (paths)
+      let sysPoints = [];
+      let diaPoints = [];
+      chartData.forEach((r, idx) => {
+        const x = paddingLeft + idx * xStep;
+        const ySys = yBpScale(r.sys);
+        const yDia = yBpScale(r.dia);
+        sysPoints.push(`${x},${ySys}`);
+        diaPoints.push(`${x},${yDia}`);
+      });
+
+      // 3. Vẽ đường gấp khúc (Polyline)
+      bpContent += `<polyline points="${sysPoints.join(' ')}" class="chart-line-sys" />`;
+      bpContent += `<polyline points="${diaPoints.join(' ')}" class="chart-line-dia" />`;
+
+      // 4. Vẽ các điểm nút tròn (mốc đo) và các mác chữ
+      chartData.forEach((r, idx) => {
+        const x = paddingLeft + idx * xStep;
+        const ySys = yBpScale(r.sys);
+        const yDia = yBpScale(r.dia);
+
+        // Nút tròn tâm thu (SYS)
+        bpContent += `<circle cx="${x}" cy="${ySys}" r="5" fill="var(--danger-color)" class="chart-point" 
+                      onmouseover="showTooltip(event, '${r.datetime}', 'Tâm thu (SYS): ${r.sys} mmHg')" 
+                      onmouseout="hideTooltip()"/>`;
+        // Nút tròn tâm trương (DIA)
+        bpContent += `<circle cx="${x}" cy="${yDia}" r="5" fill="var(--primary-color)" class="chart-point" 
+                      onmouseover="showTooltip(event, '${r.datetime}', 'Tâm trương (DIA): ${r.dia} mmHg')" 
+                      onmouseout="hideTooltip()"/>`;
+
+        // Nhãn ghi chú ngày giờ (Chỉ in nhãn chéo góc để tránh chồng lấn chữ)
+        // Nếu số lượng mốc đo quá nhiều thì in giãn cách nhãn
+        if (n <= 7 || idx % 2 === 0 || idx === n - 1) {
+          // Cắt bớt phần giờ chỉ lấy ngày tháng
+          const dateLabel = r.datetime.split(' ')[0];
+          bpContent += `<g transform="translate(${x}, ${height - paddingBottom + 15})">
+                          <text x="0" y="0" text-anchor="middle" transform="rotate(-15)" class="chart-text" fill="var(--text-color)">${dateLabel}</text>
+                        </g>`;
+        }
+      });
+
+      // 5. Vẽ trục toạ độ
+      bpContent += `<line x1="${paddingLeft}" y1="${paddingTop}" x2="${paddingLeft}" y2="${height - paddingBottom}" class="chart-axis" />`;
+      bpContent += `<line x1="${paddingLeft}" y1="${height - paddingBottom}" x2="${width - paddingRight}" y2="${height - paddingBottom}" class="chart-axis" />`;
+
+      svgBp.innerHTML = bpContent;
+
+      // ----------------------------------------------------
+      // BIỂU ĐỒ NHỊP TIM (PUL)
+      // ----------------------------------------------------
+      let maxPul = 100;
+      let minPul = 60;
+      chartData.forEach(r => {
+        if (r.pul > maxPul) maxPul = r.pul;
+        if (r.pul < minPul) minPul = r.pul;
+      });
+      maxPul += 10;
+      minPul = Math.max(30, minPul - 10);
+
+      const yPulScale = (val) => height - paddingBottom - ((val - minPul) / (maxPul - minPul)) * plotHeight;
+
+      let pulContent = "";
+
+      // 1. Vẽ đường lưới nhịp tim
+      for (let i = 0; i <= gridLevels; i++) {
+        const val = Math.round(minPul + (i / gridLevels) * (maxPul - minPul));
+        const y = yPulScale(val);
+        pulContent += `<line x1="${paddingLeft}" y1="${y}" x2="${width - paddingRight}" y2="${y}" class="chart-grid" />`;
+        pulContent += `<text x="${paddingLeft - 8}" y="${y + 4}" text-anchor="end" class="chart-text" fill="var(--text-color)">${val}</text>`;
+      }
+
+      // 2. Tạo đường gấp khúc nhịp tim
+      let pulPoints = [];
+      chartData.forEach((r, idx) => {
+        const x = paddingLeft + idx * xStep;
+        const yPul = yPulScale(r.pul);
+        pulPoints.push(`${x},${yPul}`);
+      });
+
+      pulContent += `<polyline points="${pulPoints.join(' ')}" class="chart-line-pul" />`;
+
+      // 3. Vẽ mốc nhịp tim
+      chartData.forEach((r, idx) => {
+        const x = paddingLeft + idx * xStep;
+        const yPul = yPulScale(r.pul);
+
+        pulContent += `<circle cx="${x}" cy="${yPul}" r="5" fill="var(--warning-color)" class="chart-point" 
+                      onmouseover="showTooltip(event, '${r.datetime}', 'Nhịp tim: ${r.pul} lần/phút')" 
+                      onmouseout="hideTooltip()"/>`;
+
+        if (n <= 7 || idx % 2 === 0 || idx === n - 1) {
+          const dateLabel = r.datetime.split(' ')[0];
+          pulContent += `<g transform="translate(${x}, ${height - paddingBottom + 15})">
+                          <text x="0" y="0" text-anchor="middle" transform="rotate(-15)" class="chart-text" fill="var(--text-color)">${dateLabel}</text>
+                        </g>`;
+        }
+      });
+
+      // 4. Vẽ trục toạ độ
+      pulContent += `<line x1="${paddingLeft}" y1="${paddingTop}" x2="${paddingLeft}" y2="${height - paddingBottom}" class="chart-axis" />`;
+      pulContent += `<line x1="${paddingLeft}" y1="${height - paddingBottom}" x2="${width - paddingRight}" y2="${height - paddingBottom}" class="chart-axis" />`;
+
+      svgPul.innerHTML = pulContent;
+    }
+
+    // CÁC HÀM HIỂN THỊ TOOLTIP TRÊN BIỂU ĐỒ
+    function showTooltip(event, datetime, valueText) {
+      const tooltip = document.getElementById("chart_tooltip");
+      tooltip.innerHTML = `<strong>${datetime}</strong><br>${valueText}`;
+      tooltip.style.display = "block";
+      
+      // Định vị vị trí tooltip gần con trỏ chuột
+      tooltip.style.left = (event.pageX + 15) + "px";
+      tooltip.style.top = (event.pageY - 10) + "px";
+    }
+
+    function hideTooltip() {
+      document.getElementById("chart_tooltip").style.display = "none";
+    }
+
+    // KẾT XUẤT SAO LƯU DỰ PHÒNG (CSV)
+    function exportData() {
+      if (historyRecords.length === 0) {
+        alert("Lịch sử trống, không có dữ liệu để xuất!");
+        return;
+      }
+
+      let csvContent = "Ngày Giờ,Tâm Thu (SYS),Tâm Trương (DIA),Nhịp Tim (PUL),Ghi Chú,Chẩn Đoán Huyết Áp,Chẩn Đoán Hiệu Số,Chẩn Đoán Nhịp Tim\n";
+      historyRecords.forEach(r => {
+        const noteSafe = (r.note || "").replace(/"/g, '""');
+        const bpTitleSafe = (r.bp_title || "").replace(/"/g, '""');
+        const diffTitleSafe = (r.diff_title || "").replace(/"/g, '""');
+        const pulTitleSafe = (r.pul_title || "").replace(/"/g, '""');
+        csvContent += `"${r.datetime}",${r.sys},${r.dia},${r.pul},"${noteSafe}","${bpTitleSafe}","${diffTitleSafe}","${pulTitleSafe}"\n`;
+      });
+
+      // Tạo Blob và tải tập tin
+      const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "lich_su_huyet_ap.csv");
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // SAO CHÉP DỮ LIỆU CSV VÀO CLIPBOARD
+    function copyCSVToClipboard() {
+      if (historyRecords.length === 0) {
+        alert("Lịch sử trống, không có dữ liệu để sao chép!");
+        return;
+      }
+
+      let csvContent = "Ngày Giờ,Tâm Thu (SYS),Tâm Trương (DIA),Nhịp Tim (PUL),Ghi Chú\n";
+      historyRecords.forEach(r => {
+        const noteSafe = (r.note || "").replace(/"/g, '""');
+        csvContent += `"${r.datetime}",${r.sys},${r.dia},${r.pul},"${noteSafe}"\n`;
+      });
+
+      navigator.clipboard.writeText(csvContent)
+        .then(() => alert("Đã sao chép nội dung dữ liệu định dạng CSV vào bộ nhớ đệm!"))
+        .catch(err => alert("Lỗi khi sao chép: " + err));
+    }
+
+    // NHẬP NGƯỢC DỮ LIỆU DỰ PHÒNG (IMPORT CSV)
+    function importData(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const text = e.target.result;
+        const lines = text.split("\n");
+        let importedCount = 0;
+        let newRecords = [];
+
+        for (let i = 1; i < lines.length; i++) {
+          const line = lines[i].trim();
+          if (!line) continue;
+
+          // Phân tách dấu phẩy thông minh (xử lý dấu ngoặc kép)
+          let parts = [];
+          let insideQuote = false;
+          let currentPart = "";
+          for (let char of line) {
+            if (char === '"') {
+              insideQuote = !insideQuote;
+            } else if (char === ',' && !insideQuote) {
+              parts.push(currentPart.trim());
+              currentPart = "";
+            } else {
+              currentPart += char;
+            }
+          }
+          parts.push(currentPart.trim());
+
+          if (parts.length >= 4) {
+            const datetime = parts[0].replace(/^"|"$/g, '');
+            const sys = parseInt(parts[1]);
+            const dia = parseInt(parts[2]);
+            const pul = parseInt(parts[3]);
+            const note = parts[4] ? parts[4].replace(/^"|"$/g, '').replace(/""/g, '"') : "";
+
+            if (!isNaN(sys) && !isNaN(dia) && !isNaN(pul)) {
+              // Thực hiện lại việc phân tích chẩn đoán đối với các dòng dữ liệu nhập ngược
+              let bpTitle = "";
+              let diffTitle = "";
+              let pulTitle = "";
+              let isEmergency = false;
+
+              if (guideData) {
+                const diag = getDiagnosis(sys, dia, pul);
+                if (diag) {
+                  bpTitle = diag.huyet_ap ? diag.huyet_ap.title : "N/A";
+                  diffTitle = diag.hieu_so ? diag.hieu_so.title : "N/A";
+                  pulTitle = diag.nhip_tim ? diag.nhip_tim.title : "N/A";
+                  
+                  const bpT = bpTitle.toLowerCase();
+                  const diffT = diffTitle.toLowerCase();
+                  if (bpT.includes("cấp cứu") || bpT.includes("kịch phát") || diffT.includes("kẹp")) {
+                    isEmergency = true;
+                  }
+                }
+              }
+
+              newRecords.push({
+                datetime: datetime,
+                sys: sys,
+                dia: dia,
+                pul: pul,
+                note: note,
+                bp_title: bpTitle,
+                diff_title: diffTitle,
+                pul_title: pulTitle,
+                is_emergency: isEmergency
+              });
+              importedCount++;
+            }
+          }
+        }
+
+        if (newRecords.length > 0) {
+          // Gộp dữ liệu mới vào dữ liệu hiện có (loại bỏ trùng lặp nếu trùng thời gian)
+          newRecords.forEach(newRec => {
+            const isDup = historyRecords.some(r => r.datetime === newRec.datetime && r.sys === newRec.sys && r.dia === newRec.dia);
+            if (!isDup) {
+              historyRecords.push(newRec);
+            }
+          });
+
+          // Sắp xếp lại lịch sử theo thứ tự thời gian mới nhất lên đầu
+          // Định dạng thời gian: DD/MM/YYYY HH:MM
+          historyRecords.sort((a, b) => {
+            const parseDate = (str) => {
+              const [d, m, y, h, min] = str.split(/[\/\s:]/);
+              return new Date(y, m - 1, d, h, min);
+            };
+            return parseDate(b.datetime) - parseDate(a.datetime);
+          });
+
+          saveHistory();
+          updateUI();
+          alert("Khôi phục hoàn tất! Đã nhập thành công " + importedCount + " chỉ số đo cũ.");
+        } else {
+          alert("Không tìm thấy dữ liệu hợp lệ trong file sao lưu!");
+        }
+      };
+      
+      reader.readAsText(file, "UTF-8");
+      event.target.value = ""; // Đặt lại input để có thể nhập lại cùng một file
+    }
+
+    // HIỂN THỊ CẨM NANG HƯỚNG DẪN TỪ JSON
+    function renderGuide() {
+      const container = document.getElementById("accordion_container");
+      container.innerHTML = "";
+
+      if (!guideData || !guideData.huong_dan_huyet_ap) {
+        container.innerHTML = "<p>Lỗi: Không tìm thấy dữ liệu cẩm nang.</p>";
+        return;
+      }
+
+      const guides = guideData.huong_dan_huyet_ap;
+      
+      // Các danh mục muốn dựng cẩm nang
+      const sections = [
+        { key: "khai_niem_chung", title: "1. Khái niệm về Huyết áp & Ký hiệu" },
+        { key: "huong_dan_do_huyet_ap", title: "2. Quy trình & Tư thế Đo huyết áp đúng" },
+        { key: "may_do_huyet_ap", title: "3. Chọn lựa, Vận hành & Bảo quản Thiết bị" },
+        { key: "nhan_biet_bat_thuong", title: "4. Dấu hiệu Nhận biết Huyết áp Bất thường" },
+        { key: "lien_he_benh_ly", title: "5. Biến chứng Bệnh lý & Tầm quan trọng của theo dõi" },
+        { key: "so_cuu_khan_cap", title: "6. Quy trình Sơ cứu & Xử lý Khẩn cấp" }
+      ];
+
+      sections.forEach((sec, index) => {
+        const sectionData = guides[sec.key];
+        if (!sectionData) return;
+
+        const accordion = document.createElement("div");
+        accordion.className = "accordion-item";
+
+        // Phần tiêu đề Accordion
+        const header = document.createElement("div");
+        header.className = "accordion-header";
+        header.innerHTML = `<span>${sec.title}</span> <span class="arrow">▼</span>`;
+        header.onclick = () => toggleAccordion(index);
+
+        // Phần nội dung bên trong Accordion
+        const content = document.createElement("div");
+        content.className = "accordion-content";
+        content.id = "accordion_content_" + index;
+
+        // Xây dựng nội dung chi tiết dựa trên cấu trúc các sub-keys của JSON
+        let detailHtml = "";
+        for (let subKey in sectionData) {
+          if (subKey === "title") continue;
+          const block = sectionData[subKey];
+          if (block && block.title && block.text) {
+            detailHtml += `<div style="margin-bottom: 1.2rem;">
+                            <h3 style="margin-top: 0; color: var(--primary-color);">${block.title}</h3>
+                            <p style="margin: 0; font-size: 1.05rem;">${block.text}</p>
+                          </div>`;
+          }
+        }
+
+        content.innerHTML = detailHtml;
+        accordion.appendChild(header);
+        accordion.appendChild(content);
+        container.appendChild(accordion);
+      });
+    }
+
+    // ĐÓNG MỞ ACCORDION
+    function toggleAccordion(index) {
+      const content = document.getElementById("accordion_content_" + index);
+      const isVisible = content.classList.contains("active");
+
+      // Đóng tất cả accordion khác trước
+      document.querySelectorAll(".accordion-content").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".accordion-header .arrow").forEach(el => el.textContent = "▼");
+
+      // Nếu trước đó chưa mở thì mở ra
+      if (!isVisible) {
+        content.classList.add("active");
+        content.parentNode.querySelector(".arrow").textContent = "▲";
+      }
+    }
+  </script>
+</body>
+</html>

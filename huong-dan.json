@@ -1,0 +1,222 @@
+{
+  "huong_dan_huyet_ap": {
+    "khai_niem_chung": {
+      "title": "Khái niệm về huyết áp",
+      "tong_quan": {
+        "title": "Khái niệm chung",
+        "text": "Huyết áp gồm hai chỉ số chính: Tâm thu (SYS) và Tâm trương (DIA). Nhịp tim (PUL) thường được hiển thị kèm theo."
+      },
+      "giai_thich_ky_hieu": {
+        "title": "Giải thích ký hiệu",
+        "text": "SYS (Systolic): huyết áp tâm thu, số trên. DIA (Diastolic): huyết áp tâm trương, số dưới. PUL (Pulse): nhịp tim, số lần tim đập mỗi phút. MAP (Mean Arterial Pressure): huyết áp trung bình."
+      }
+    },
+    "huong_dan_do_huyet_ap": {
+      "title": "Cách đo huyết áp",
+      "cach_do_dung": {
+        "title": "Cách đo đúng",
+        "text": "Ngồi tựa lưng thoải mái, chân đặt phẳng trên sàn, tay đặt trên bàn ngang tầm tim. Quấn vòng bít bắp tay trên nếp gấp khuỷu tay 1 - 2 cm; nếu đo cổ tay phải giữ cổ tay ngang tầm ngực. Giữ yên lặng, không nói chuyện hoặc cử động trong suốt quá trình đo."
+      },
+      "thoi_diem_do": {
+        "title": "Thời điểm đo",
+        "text": "Nên đo tối thiểu 2 lần mỗi ngày: Buổi sáng khi vừa thức dậy (trước khi ăn, tập thể thao hay uống thuốc) và buổi tối trước khi đi ngủ khoảng 30 phút. Đo vào các khung giờ cố định và nghỉ ngơi 5 phút trước khi tiến hành đo."
+      },
+      "yeu_to_anh_huong": {
+        "title": "Yếu tố ảnh hưởng",
+        "text": "Căng thẳng, vận động mạnh, hút thuốc, uống cà phê/trà, ăn no, hoặc đo khi đang buồn tiểu đều có thể làm tăng huyết áp giả tạo. Nên tránh các yếu tố này ít nhất 30 phút trước khi đo."
+      }
+    },
+    "may_do_huyet_ap": {
+      "title": "Máy đo huyết áp",
+      "van_hanh_bao_quan": {
+        "title": "Vận hành và bảo quản máy",
+        "text": "Đọc kỹ hướng dẫn sử dụng, kiểm tra pin hoặc nguồn điện trước khi đo. Khi dùng xong cần cất giữ nơi khô ráo, tránh va đập mạnh, ẩm ướt hoặc ánh nắng trực tiếp."
+      },
+      "cac_loai_may_do": {
+        "title": "Các loại máy",
+        "text": "Máy cơ: độ chính xác cao nhưng đòi hỏi kỹ thuật. Máy điện tử bắp tay: phổ biến nhất, cho kết quả ổn định và chính xác. Máy điện tử cổ tay: nhỏ gọn, tiện mang theo, nhưng kết quả dễ sai lệch nếu đo sai tư thế."
+      },
+      "cach_chon_may": {
+        "title": "Chọn máy phù hợp",
+        "text": "Ưu tiên máy điện tử bắp tay có kiểm định lâm sàng (ESH, AAMI) và vòng bít vừa vặn. Chỉ chọn máy cổ tay khi bắp tay quá lớn hoặc bị chấn thương, và khi đo bắt buộc phải giữ cổ tay ngang tầm tim để đảm bảo chất lượng đo tốt nhất."
+      }
+    },
+    "nhan_biet_bat_thuong": {
+      "title": "Nhận biết bất thường",
+      "muc_huyet_ap_bat_thuong": {
+        "title": "Trường hợp bất thường",
+        "text": "Huyết áp cao hơn 140/90 mmHg hoặc thấp hơn 90/60 mmHg được coi là bất thường."
+      },
+      "dau_hieu_huyet_ap_cao": {
+        "title": "Dấu hiệu huyết áp cao",
+        "text": "Đau đầu dữ dội (đặc biệt là vùng sau gáy), chóng mặt, mặt đỏ bừng, chảy máu cam, khó thở hoặc tức ngực."
+      },
+      "dau_hieu_huyet_ap_thap": {
+        "title": "Dấu hiệu huyết áp thấp",
+        "text": "Chóng mặt, xây xẩm mặt mày, nhìn mờ, da lạnh nhợt nhạt, vã mồ hôi lạnh, buồn nôn hoặc ngất xỉu."
+      },
+      "chenh_lech_huyet_ap": {
+        "title": "Chênh lệch SYS/DIA",
+        "text": "Khoảng cách bình thường giữa SYS và DIA là 30 - 40 mmHg. Nếu chênh lệch quá lớn (tâm thu cao, tâm trương thấp) có thể do xơ cứng động mạch. Nếu chênh lệch quá nhỏ (dưới 20 mmHg, gọi là huyết áp kẹp) là dấu hiệu cảnh báo suy tim, hẹp van động mạch chủ hoặc mất máu/mất nước nặng."
+      },
+      "huong_dan_kham_bac_si": {
+        "title": "Khi nào đi khám",
+        "text": "Nên đi khám nếu chỉ số bất thường lặp lại nhiều lần. Đặc biệt, nếu chỉ số vượt quá 180/120 mmHg (cơn tăng huyết áp kịch phát) kèm đau ngực, khó thở, hoặc tê yếu cơ, cần gọi cấp cứu 115 ngay lập tức."
+      }
+    },
+    "lien_he_benh_ly": {
+      "title": "Liên hệ bệnh lý",
+      "bien_chung_nguy_hiem": {
+        "title": "Nguy cơ bệnh lý",
+        "text": "Huyết áp bất thường kéo dài không kiểm soát sẽ gây tổn thương nghiêm trọng đến các cơ quan đích, dẫn đến nhồi máu cơ tim, đột quỵ (tai biến mạch máu não), suy thận mạn tính và tổn thương võng mạc gây mù loà."
+      },
+      "tam_quan_trong_theo_doi": {
+        "title": "Tầm quan trọng",
+        "text": "Theo dõi huyết áp định kỳ là biện pháp hiệu quả nhất để phát hiện sớm 'kẻ giết người thầm lặng' này, giúp phòng ngừa các biến chứng nguy hiểm trước khi chúng xảy ra."
+      },
+      "huong_dan_ghi_chep": {
+        "title": "Ghi chép kết quả",
+        "text": "Nên ghi chép chi tiết kết quả (gồm ngày, giờ, chỉ số SYS/DIA/PUL) và lưu ý kèm theo (như sau khi tập thể dục hoặc sau khi uống thuốc) để giúp bác sĩ đánh giá chính xác hiệu quả điều trị."
+      }
+    },
+    "so_cuu_khan_cap": {
+      "title": "Xử lý khẩn cấp",
+      "nguyen_tac_so_cuu": {
+        "title": "Sơ cứu cơ bản",
+        "text": "Nếu huyết áp quá cao hoặc quá thấp kèm triệu chứng nguy hiểm, cần sơ cứu ngay."
+      },
+      "so_dien_thoai_khan_cap": {
+        "title": "Số khẩn cấp",
+        "text": "Gọi số cấp cứu 115 hoặc bác sĩ riêng khi cần."
+      },
+      "cac_buoc_so_cuu": {
+        "title": "Các bước sơ cứu",
+        "text": "Giữ người bệnh nằm yên ở nơi thoáng mát, nới lỏng quần áo, không tự ý cho ăn uống hay vận động mạnh, và nhanh chóng chờ nhân viên y tế."
+      }
+    }
+  },
+  "chan_doan": {
+    "huyet_ap_kep": {
+      "title": "Huyết áp kẹp (Hiệu số <= 20 mmHg)",
+      "text": "Cảnh báo nguy kịch: Hiệu số huyết áp của bạn đang ở mức rất thấp (<= 20 mmHg - Huyết áp kẹp). Đây là dấu hiệu lực co bóp của tim suy giảm nặng hoặc cơ thể mất nước/mất máu cấp. Hãy nằm yên tại chỗ, nới lỏng quần áo và gọi ngay cấp cứu 115 hoặc bác sĩ điều trị để được xử lý kịp thời!",
+      "conditions": {
+        "diff_max": 20
+      }
+    },
+    "hieu_so_can_kep": {
+      "title": "Hiệu số huyết áp cận kẹp (21 - 29 mmHg)",
+      "text": "Thông báo: Hiệu số huyết áp của bạn hơi thấp (21 - 29 mmHg). Trạng thái này có thể xảy ra khi cơ thể thiếu nước nhẹ, mệt mỏi hoặc căng thẳng tâm lý. Bạn nên nghỉ ngơi, uống nước ấm và tiếp tục theo dõi thêm.",
+      "conditions": {
+        "diff_min": 21,
+        "diff_max": 29
+      }
+    },
+    "hieu_so_binh_thuong": {
+      "title": "Hiệu số huyết áp bình thường (30 - 50 mmHg)",
+      "text": "Chúc mừng: Hiệu số huyết áp của bạn nằm trong khoảng an toàn (30 - 50 mmHg). Điều này cho thấy hệ thống tim mạch và độ co giãn của mạch máu đang hoạt động tốt.",
+      "conditions": {
+        "diff_min": 30,
+        "diff_max": 50
+      }
+    },
+    "hieu_so_can_rong": {
+      "title": "Hiệu số huyết áp cận rộng (51 - 59 mmHg)",
+      "text": "Thông báo: Hiệu số huyết áp của bạn ở mức hơi cao (51 - 59 mmHg). Đây là dấu hiệu cảnh báo sớm sự suy giảm đàn hồi nhẹ của thành mạch máu. Bạn nên điều chỉnh lối sống, giảm ăn mặn và tập thể dục đều đặn.",
+      "conditions": {
+        "diff_min": 51,
+        "diff_max": 59
+      }
+    },
+    "hieu_so_rong": {
+      "title": "Hiệu số huyết áp rộng (Chênh lệch lớn >= 60 mmHg)",
+      "text": "Cảnh báo: Khoảng cách giữa huyết áp tâm thu và tâm trương của bạn đang ở mức rất lớn (>= 60 mmHg). Hiện tượng này thường do xơ cứng động mạch (mạch máu giảm đàn hồi ở người lớn tuổi), hở van động mạch chủ hoặc cường giáp. Bạn nên sớm đi khám bác sĩ chuyên khoa tim mạch để được chẩn đoán và phòng ngừa nguy cơ tai biến mạch máu não.",
+      "conditions": {
+        "diff_min": 60
+      }
+    },
+    "con_tang_huyet_ap_kich_phat": {
+      "title": "Cơn tăng huyết áp kịch phát (Cấp cứu)",
+      "text": "Cảnh báo đỏ: Chỉ số huyết áp của bạn ở mức cực kỳ nguy hiểm (SYS >= 180 hoặc DIA >= 120 mmHg). Đây là cơn tăng huyết áp cấp tính có nguy cơ trực tiếp gây tai biến mạch máu não hoặc đột quỵ tim. Hãy nghỉ ngơi yên tĩnh hoàn toàn và gọi cấp cứu 115 ngay lập tức nếu kèm các triệu chứng đau đầu dữ dội, tức ngực, khó thở hoặc tê yếu tay chân!",
+      "conditions": {
+        "sys_min": 180,
+        "dia_min": 120,
+        "operator": "or"
+      }
+    },
+    "tang_huyet_ap_do_2": {
+      "title": "Tăng huyết áp độ 2 (Mức độ nặng)",
+      "text": "Cảnh báo: Chỉ số phản ánh tình trạng Tăng huyết áp độ 2 (SYS 160 - 179 hoặc DIA 100 - 109 mmHg). Bạn cần ngồi nghỉ ngơi tĩnh lặng ở nơi thoáng mát từ 15 - 30 phút rồi tiến hành đo lại. Nếu chỉ số vẫn cao hoặc xuất hiện các triệu chứng đau đầu, chóng mặt, cần liên hệ bác sĩ điều trị để được tư vấn điều chỉnh thuốc hạ áp.",
+      "conditions": {
+        "sys_min": 160,
+        "sys_max": 179,
+        "dia_min": 100,
+        "dia_max": 109,
+        "operator": "or"
+      }
+    },
+    "tang_huyet_ap_do_1": {
+      "title": "Tăng huyết áp độ 1 (Mức độ nhẹ)",
+      "text": "Thông báo: Bạn đang ở mức Tăng huyết áp độ 1 (SYS 140 - 159 hoặc DIA 90 - 99 mmHg). Hãy chú ý theo dõi huyết áp hằng ngày, thiết lập lối sống lành mạnh (giảm muối, giảm chất béo, tăng cường vận động) và tham khảo ý kiến bác sĩ để có phương án kiểm soát lâu dài trước khi tiến triển nặng hơn.",
+      "conditions": {
+        "sys_min": 140,
+        "sys_max": 159,
+        "dia_min": 90,
+        "dia_max": 99,
+        "operator": "or"
+      }
+    },
+    "tien_tang_huyet_ap": {
+      "title": "Tiền tăng huyết áp (Huyết áp bình thường cao)",
+      "text": "Thông báo: Huyết áp của bạn ở mức bình thường cao (SYS 120 - 139 hoặc DIA 80 - 89 mmHg). Bạn chưa cần điều trị bằng thuốc nhưng nên điều chỉnh chế độ ăn uống khoa học, hạn chế rượu bia, thuốc lá và rèn luyện thể chất đều đặn để ngăn ngừa tiến triển thành cao huyết áp.",
+      "conditions": {
+        "sys_min": 120,
+        "sys_max": 139,
+        "dia_min": 80,
+        "dia_max": 89,
+        "operator": "or"
+      }
+    },
+    "huyet_ap_binh_thuong": {
+      "title": "Huyết áp bình thường (Ổn định)",
+      "text": "Chúc mừng: Chỉ số huyết áp của bạn hoàn toàn bình thường và ổn định (SYS 90 - 119 và DIA 60 - 79 mmHg). Hãy duy trì chế độ sinh hoạt, dinh dưỡng lành mạnh và tập luyện thể dục thể thao đều đặn hiện tại để tiếp tục bảo vệ sức khoẻ tim mạch!",
+      "conditions": {
+        "sys_min": 90,
+        "sys_max": 119,
+        "dia_min": 60,
+        "dia_max": 79,
+        "operator": "and"
+      }
+    },
+    "huyet_ap_thap": {
+      "title": "Huyết áp thấp",
+      "text": "Thông báo: Huyết áp của bạn đang ở mức thấp (SYS < 90 hoặc DIA < 60 mmHg). Hãy nằm nghỉ đầu thấp, uống một ly nước ấm (trà gừng hoặc nước ấm pha muối nhạt) để nâng huyết áp. Tránh thay đổi tư thế đột ngột từ nằm sang đứng để không bị chóng mặt, té ngã. Nếu chỉ số quá thấp kèm ngất xỉu, cần đưa đến cơ sở y tế gần nhất.",
+      "conditions": {
+        "sys_max": 89,
+        "dia_max": 59,
+        "operator": "or"
+      }
+    },
+    "nhip_tim_cham": {
+      "title": "Nhịp tim chậm (< 60 lần/phút)",
+      "text": "Thông báo: Nhịp tim của bạn đang ở mức thấp (< 60 lần/phút). Điều này là bình thường ở các vận động viên hoặc người tập thể thao thường xuyên. Tuy nhiên, nếu bạn không phải vận động viên và cảm thấy chóng mặt, mệt mỏi, khó thở, bạn nên tham khảo ý kiến bác sĩ để được kiểm tra tim mạch.",
+      "conditions": {
+        "pul_max": 59
+      }
+    },
+    "nhip_tim_binh_thuong": {
+      "title": "Nhịp tim bình thường (60 - 100 lần/phút)",
+      "text": "Chúc mừng: Nhịp tim của bạn nằm trong khoảng bình thường và ổn định (60 - 100 lần/phút). Điều này phản ánh trạng thái hoạt động co bóp và nghỉ ngơi tốt của cơ tim.",
+      "conditions": {
+        "pul_min": 60,
+        "pul_max": 100
+      }
+    },
+    "nhip_tim_nhanh": {
+      "title": "Nhịp tim nhanh (> 100 lần/phút)",
+      "text": "Cảnh báo: Nhịp tim của bạn ở mức cao (> 100 lần/phút). Tình trạng này có thể xuất hiện sau khi vừa vận động, lo âu, sốt hoặc mất nước. Bạn nên ngồi nghỉ tĩnh lặng từ 10 - 15 phút rồi đo lại. Nếu nhịp tim vẫn cao liên tục khi nghỉ ngơi kèm hồi hộp, đánh trống ngực, hãy sớm đi khám bác sĩ chuyên khoa tim mạch.",
+      "conditions": {
+        "pul_min": 101
+      }
+    }
+  }
+}
