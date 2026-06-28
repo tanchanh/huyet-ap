@@ -23,6 +23,22 @@
       --font-stack: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
 
+    html[data-theme="dark"] {
+      --bg-color: #0f172a;
+      --text-color: #f1f5f9;
+      --border-color: #334155;
+      --card-bg: #1e293b;
+      --primary-color: #3b82f6;
+      --primary-hover: #60a5fa;
+      --danger-color: #ef4444;
+      --danger-bg: #450a0a;
+      --warning-color: #fbbf24;
+      --warning-bg: #451a03;
+      --success-color: #34d399;
+      --success-bg: #064e3b;
+      --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
     /* Thiết lập nền và font chữ */
     body {
       margin: 0;
@@ -340,22 +356,65 @@
       margin-top: 1rem;
     }
 
-    .result-box.danger {
-      background-color: var(--danger-bg);
-      border-color: var(--danger-color);
-      color: var(--danger-color);
+    /* Các lớp CSS màu sắc level-0 đến level-3 theo mức độ nguy hiểm */
+    .result-box.level-0 {
+      background-color: var(--success-bg);
+      border-color: var(--success-color);
+      color: var(--success-color);
     }
 
-    .result-box.warning {
+    .result-box.level-1 {
       background-color: var(--warning-bg);
       border-color: var(--warning-color);
       color: var(--warning-color);
     }
 
-    .result-box.success {
-      background-color: var(--success-bg);
-      border-color: var(--success-color);
-      color: var(--success-color);
+    .result-box.level-2 {
+      background-color: var(--danger-bg);
+      border-color: var(--danger-color);
+      color: var(--danger-color);
+    }
+
+    .result-box.level-3 {
+      background-color: #ffe4e6;
+      border-color: #be123c;
+      color: #9f1239;
+      border-width: 3px;
+      animation: pulse-danger-border 1.5s infinite alternate;
+    }
+
+    @keyframes pulse-danger-border {
+      from {
+        border-color: #be123c;
+        box-shadow: 0 0 4px rgba(190, 18, 60, 0.4);
+      }
+
+      to {
+        border-color: #f43f5e;
+        box-shadow: 0 0 12px rgba(244, 63, 94, 0.8);
+      }
+    }
+
+    /* Các lớp CSS cho hàng lịch sử đo */
+    .history-row-level-0 {
+      background-color: var(--success-bg) !important;
+      color: var(--success-color) !important;
+    }
+
+    .history-row-level-1 {
+      background-color: var(--warning-bg) !important;
+      color: var(--warning-color) !important;
+    }
+
+    .history-row-level-2 {
+      background-color: var(--danger-bg) !important;
+      color: var(--danger-color) !important;
+    }
+
+    .history-row-level-3 {
+      background-color: #ffe4e6 !important;
+      color: #9f1239 !important;
+      font-weight: bold;
     }
 
     /* Accordion trong cẩm nang */
@@ -764,6 +823,51 @@
     let historyRecords = [];
     let guideData = null; // Chứa nội dung tệp huong-dan.json
 
+    // 3 biến số nội bộ quản lý trạng thái nguy hại
+    let muc_do_huyet_ap = 0;
+    let muc_do_hieu_so = 0;
+    let muc_do_nhip_tim = 0;
+
+    // Bảng ánh xạ từ khoá chẩn đoán sang mức độ y khoa nội bộ (0 - 3)
+    const keyToLevel = {
+      "huyet_ap_kep": 3,
+      "hieu_so_can_kep": 1,
+      "hieu_so_binh_thuong": 0,
+      "hieu_so_can_rong": 1,
+      "hieu_so_rong": 2,
+
+      "con_tang_huyet_ap_kich_phat": 3,
+      "tang_huyet_ap_do_2": 2,
+      "tang_huyet_ap_do_1": 1,
+      "tien_tang_huyet_ap": 1,
+      "huyet_ap_binh_thuong": 0,
+      "huyet_ap_thap": 1,
+
+      "nhip_tim_cham": 1,
+      "nhip_tim_binh_thuong": 0,
+      "nhip_tim_nhanh": 1
+    };
+
+    // Hàm dự phòng tính toán mức độ nguy hiểm khi chưa tải xong tệp JSON
+    function getFallbackLevels(sys, dia, pul) {
+      const diff = sys - dia;
+
+      let lvl_bp = 0;
+      if (sys >= 180 || dia >= 120) lvl_bp = 3;
+      else if ((sys >= 160 && sys <= 179) || (dia >= 100 && dia <= 109)) lvl_bp = 2;
+      else if ((sys >= 140 && sys <= 159) || (dia >= 90 && dia <= 99) || (sys >= 120 && sys <= 139) || (dia >= 80 && dia <= 89) || (sys < 90 || dia < 60)) lvl_bp = 1;
+
+      let lvl_diff = 0;
+      if (diff <= 20) lvl_diff = 3;
+      else if (diff >= 60) lvl_diff = 2;
+      else if ((diff >= 21 && diff <= 29) || (diff >= 51 && diff <= 59)) lvl_diff = 1;
+
+      let lvl_pul = 0;
+      if (pul > 100 || pul < 60) lvl_pul = 1;
+
+      return { muc_do_huyet_ap: lvl_bp, muc_do_hieu_so: lvl_diff, muc_do_nhip_tim: lvl_pul };
+    }
+
     // BẮT ĐẦU CHƯƠNG TRÌNH KHI TẢI TRANG
     window.addEventListener("DOMContentLoaded", () => {
       // Gắn sự kiện click cho nút Xác nhận của Custom Confirm Modal
@@ -973,9 +1077,19 @@
       const btn = document.getElementById("direct_call_btn");
       const inputVal = document.getElementById("emergency_phone_input").value.trim();
 
+      const hasLevel3 = historyRecords.length > 0 && (
+        historyRecords[0].level_bp === 3 ||
+        historyRecords[0].level_diff === 3 ||
+        historyRecords[0].level_pul === 3 ||
+        historyRecords[0].is_emergency
+      );
+
       if (inputVal !== emergencyPhone) {
         btn.textContent = "Lưu";
         btn.classList.add("save-style");
+        btn.style.backgroundColor = "var(--warning-color)";
+        btn.style.borderColor = "var(--warning-color)";
+        btn.style.color = "#1e293b";
         btn.style.display = "inline-flex";
       } else {
         btn.classList.remove("save-style");
@@ -984,6 +1098,19 @@
         } else {
           btn.textContent = "📞 Gọi";
           btn.style.display = "inline-flex";
+          if (hasLevel3) {
+            // Đổi màu sang đỏ nổi bật khi có mức 3
+            btn.style.backgroundColor = "var(--danger-color)";
+            btn.style.borderColor = "var(--danger-color)";
+            btn.style.color = "#ffffff";
+            btn.style.animation = "pulse-danger-border 1.5s infinite alternate";
+          } else {
+            // Trở về màu mặc định (xanh lá)
+            btn.style.backgroundColor = "var(--success-color)";
+            btn.style.borderColor = "var(--success-color)";
+            btn.style.color = "#ffffff";
+            btn.style.animation = "none";
+          }
         }
       }
     }
@@ -1130,7 +1257,7 @@
         if (cond.hasOwnProperty("diff_min") && diff < cond.diff_min) match = false;
         if (cond.hasOwnProperty("diff_max") && diff > cond.diff_max) match = false;
         if (match) {
-          hieuSoRes = chanDoanData[key];
+          hieuSoRes = { ...chanDoanData[key], level: keyToLevel[key] };
           break;
         }
       }
@@ -1183,7 +1310,7 @@
         }
 
         if (finalMatch) {
-          huyetApRes = chanDoanData[key];
+          huyetApRes = { ...chanDoanData[key], level: keyToLevel[key] };
           break;
         }
       }
@@ -1197,7 +1324,7 @@
         if (cond.hasOwnProperty("pul_min") && pul < cond.pul_min) match = false;
         if (cond.hasOwnProperty("pul_max") && pul > cond.pul_max) match = false;
         if (match) {
-          nhipTimRes = chanDoanData[key];
+          nhipTimRes = { ...chanDoanData[key], level: keyToLevel[key] };
           break;
         }
       }
@@ -1207,19 +1334,6 @@
         huyet_ap: huyetApRes,
         nhip_tim: nhipTimRes
       };
-    }
-
-    // LẤY MÀU SẮC ĐẠI DIỆN PHÂN ĐỘ ĐỂ STYLE
-    function getStatusClass(title) {
-      if (!title) return "";
-      const t = title.toLowerCase();
-      if (t.includes("nguy kịch") || t.includes("kịch phát") || t.includes("nặng") || t.includes("cấp cứu")) {
-        return "danger";
-      }
-      if (t.includes("cảnh báo") || t.includes("nhẹ") || t.includes("tiền") || t.includes("thấp") || t.includes("cận")) {
-        return "warning";
-      }
-      return "success";
     }
 
     // NHẬP BẢN GHI ĐO MỚI
@@ -1266,14 +1380,19 @@
             pulText: diag.nhip_tim ? diag.nhip_tim.text : ""
           };
 
-          // Kiểm tra xem có cảnh báo đỏ khẩn cấp không
-          const bpT = diagResultText.bpTitle.toLowerCase();
-          const diffT = diagResultText.diffTitle.toLowerCase();
-          if (bpT.includes("cấp cứu") || bpT.includes("kịch phát") || diffT.includes("kẹp")) {
-            isEmergency = true;
-          }
+          // Gán đồng thời
+          muc_do_huyet_ap = diag.huyet_ap ? diag.huyet_ap.level : 0;
+          muc_do_hieu_so = diag.hieu_so ? diag.hieu_so.level : 0;
+          muc_do_nhip_tim = diag.nhip_tim ? diag.nhip_tim.level : 0;
         }
+      } else {
+        const fallback = getFallbackLevels(sys, dia, pul);
+        muc_do_huyet_ap = fallback.muc_do_huyet_ap;
+        muc_do_hieu_so = fallback.muc_do_hieu_so;
+        muc_do_nhip_tim = fallback.muc_do_nhip_tim;
       }
+
+      isEmergency = (muc_do_huyet_ap === 3 || muc_do_hieu_so === 3 || muc_do_nhip_tim === 3);
 
       // Cập nhật giao diện kết quả chẩn đoán nhanh
       document.getElementById("diagnosis_placeholder").style.display = "none";
@@ -1282,19 +1401,19 @@
 
       // 1. Chỉ số huyết áp
       const boxBp = document.getElementById("diag_bp");
-      boxBp.className = "result-box " + getStatusClass(diagResultText.bpTitle);
+      boxBp.className = "result-box level-" + muc_do_huyet_ap;
       boxBp.querySelector(".diag-title").textContent = diagResultText.bpTitle;
       boxBp.querySelector(".diag-text").textContent = diagResultText.bpText;
 
       // 2. Chỉ số hiệu số
       const boxDiff = document.getElementById("diag_diff");
-      boxDiff.className = "result-box " + getStatusClass(diagResultText.diffTitle);
+      boxDiff.className = "result-box level-" + muc_do_hieu_so;
       boxDiff.querySelector(".diag-title").textContent = diagResultText.diffTitle;
       boxDiff.querySelector(".diag-text").textContent = diagResultText.diffText;
 
       // 3. Chỉ số nhịp tim
       const boxPul = document.getElementById("diag_pul");
-      boxPul.className = "result-box " + getStatusClass(diagResultText.pulTitle);
+      boxPul.className = "result-box level-" + muc_do_nhip_tim;
       boxPul.querySelector(".diag-title").textContent = diagResultText.pulTitle;
       boxPul.querySelector(".diag-text").textContent = diagResultText.pulText;
 
@@ -1308,6 +1427,9 @@
         bp_title: diagResultText.bpTitle,
         diff_title: diagResultText.diffTitle,
         pul_title: diagResultText.pulTitle,
+        level_bp: muc_do_huyet_ap,
+        level_diff: muc_do_hieu_so,
+        level_pul: muc_do_nhip_tim,
         is_emergency: isEmergency
       };
 
@@ -1357,29 +1479,33 @@
         tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Chưa có dữ liệu đo được lưu.</td></tr>';
       } else {
         historyRecords.forEach((r, index) => {
-          // Thực hiện chạy lại chẩn đoán cho từng bản ghi cũ nếu chưa được gán nhãn chẩn đoán (ví dụ do nạp file JSON muộn)
-          if (guideData && (!r.bp_title || r.bp_title === "N/A")) {
-            const diag = getDiagnosis(r.sys, r.dia, r.pul);
-            if (diag) {
-              r.bp_title = diag.huyet_ap ? diag.huyet_ap.title : "N/A";
-              r.diff_title = diag.hieu_so ? diag.hieu_so.title : "N/A";
-              r.pul_title = diag.nhip_tim ? diag.nhip_tim.title : "N/A";
+          // Thực hiện chạy lại chẩn đoán cho từng bản ghi cũ nếu chưa được gán nhãn chẩn đoán hoặc chưa có mức độ
+          if (r.level_bp === undefined || r.level_diff === undefined || r.level_pul === undefined || !r.bp_title || r.bp_title === "N/A") {
+            if (guideData) {
+              const diag = getDiagnosis(r.sys, r.dia, r.pul);
+              if (diag) {
+                r.bp_title = diag.huyet_ap ? diag.huyet_ap.title : "N/A";
+                r.diff_title = diag.hieu_so ? diag.hieu_so.title : "N/A";
+                r.pul_title = diag.nhip_tim ? diag.nhip_tim.title : "N/A";
 
-              const bpT = r.bp_title.toLowerCase();
-              const diffT = r.diff_title.toLowerCase();
-              if (bpT.includes("cấp cứu") || bpT.includes("kịch phát") || diffT.includes("kẹp")) {
-                r.is_emergency = true;
+                r.level_bp = diag.huyet_ap ? diag.huyet_ap.level : 0;
+                r.level_diff = diag.hieu_so ? diag.hieu_so.level : 0;
+                r.level_pul = diag.nhip_tim ? diag.nhip_tim.level : 0;
               }
+            } else {
+              const fallback = getFallbackLevels(r.sys, r.dia, r.pul);
+              r.level_bp = fallback.muc_do_huyet_ap;
+              r.level_diff = fallback.muc_do_hieu_so;
+              r.level_pul = fallback.muc_do_nhip_tim;
             }
+            r.is_emergency = (r.level_bp === 3 || r.level_diff === 3 || r.level_pul === 3);
           }
 
           const tr = document.createElement("tr");
 
-          // Kiểm tra xem bản ghi có phải khẩn cấp nguy hiểm không để hiển thị cảnh báo đỏ
-          if (r.is_emergency) {
-            tr.style.backgroundColor = "var(--danger-bg)";
-            tr.style.color = "var(--danger-color)";
-          }
+          // Áp dụng lớp CSS theo mức độ nguy hại cao nhất của bản ghi
+          const maxLevel = Math.max(r.level_bp || 0, r.level_diff || 0, r.level_pul || 0);
+          tr.className = "history-row-level-" + maxLevel;
 
           tr.innerHTML = `
             <td>${r.datetime}</td>
@@ -1402,6 +1528,9 @@
       } else {
         banner.style.display = "none";
       }
+
+      // Đồng bộ trạng thái hiển thị và đổi màu của nút gọi điện bác sĩ
+      updateCallBtnState();
 
       // 3. Vẽ lại các biểu đồ
       drawCharts();
@@ -1683,6 +1812,9 @@
               let diffTitle = "";
               let pulTitle = "";
               let isEmergency = false;
+              let level_bp = 0;
+              let level_diff = 0;
+              let level_pul = 0;
 
               if (guideData) {
                 const diag = getDiagnosis(sys, dia, pul);
@@ -1690,14 +1822,17 @@
                   bpTitle = diag.huyet_ap ? diag.huyet_ap.title : "N/A";
                   diffTitle = diag.hieu_so ? diag.hieu_so.title : "N/A";
                   pulTitle = diag.nhip_tim ? diag.nhip_tim.title : "N/A";
-
-                  const bpT = bpTitle.toLowerCase();
-                  const diffT = diffTitle.toLowerCase();
-                  if (bpT.includes("cấp cứu") || bpT.includes("kịch phát") || diffT.includes("kẹp")) {
-                    isEmergency = true;
-                  }
+                  level_bp = diag.huyet_ap ? diag.huyet_ap.level : 0;
+                  level_diff = diag.hieu_so ? diag.hieu_so.level : 0;
+                  level_pul = diag.nhip_tim ? diag.nhip_tim.level : 0;
                 }
+              } else {
+                const fallback = getFallbackLevels(sys, dia, pul);
+                level_bp = fallback.muc_do_huyet_ap;
+                level_diff = fallback.muc_do_hieu_so;
+                level_pul = fallback.muc_do_nhip_tim;
               }
+              isEmergency = (level_bp === 3 || level_diff === 3 || level_pul === 3);
 
               newRecords.push({
                 datetime: datetime,
@@ -1708,6 +1843,9 @@
                 bp_title: bpTitle,
                 diff_title: diffTitle,
                 pul_title: pulTitle,
+                level_bp: level_bp,
+                level_diff: level_diff,
+                level_pul: level_pul,
                 is_emergency: isEmergency
               });
               importedCount++;
