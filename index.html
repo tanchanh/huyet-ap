@@ -522,6 +522,7 @@
     <input type="password" id="unlock_password" placeholder="Mật khẩu của bạn..." onkeypress="handleUnlockEnter(event)">
 
     <button onclick="handleUnlock()">Mở khoá dữ liệu</button>
+    <button onclick="handleForgotClearData()" class="danger" style="margin-top: 0.5rem;">Xoá Dữ Liệu & Mật Khẩu</button>
   </div>
 
   <!-- GIAO DIỆN CHÍNH SAU KHI ĐÃ ĐĂNG NHẬP -->
@@ -1819,6 +1820,22 @@
         content.classList.add("active");
         content.parentNode.querySelector(".arrow").textContent = "▲";
       }
+    }
+
+    // XỬ LÝ XOÁ TOÀN BỘ DỮ LIỆU KHI QUÊN MẬT KHẨU
+    function handleForgotClearData() {
+      showConfirm("CẢNH BÁO: Hành động này sẽ xoá sạch toàn bộ dữ liệu đo huyết áp, số điện thoại bác sĩ và mật khẩu của bạn. Bạn sẽ phải thiết lập lại từ đầu. Bạn có chắc chắn muốn tiếp tục không?", function () {
+        // 1. Xoá localStorage
+        localStorage.clear();
+
+        // 2. Xoá tất cả cookies
+        document.cookie.split(";").forEach(function(c) {
+          document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+        });
+
+        alert("Đã xoá toàn bộ dữ liệu và mật khẩu thành công!");
+        window.location.reload();
+      });
     }
   </script>
 </body>
