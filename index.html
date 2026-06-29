@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Huyết Áp Của Bạn - D.T.Chánh</title>
+  <title>Quản Lý Chỉ Số Huyết Áp - D.T.Chánh</title>
   <style>
     :root {
       --bg-color: #f8fafc;
@@ -86,7 +86,7 @@
     }
 
     h2 {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: bold;
       margin-top: 1rem;
       margin-bottom: 1rem;
@@ -554,7 +554,7 @@
 
   <!-- TIÊU ĐỀ CHÍNH -->
   <h1 onclick="lockApp()" class="lockable-title" onmouseover="showTitleTooltip(event)" onmouseout="hideTooltip()"
-    title="Nhấp vào để khoá ứng dụng">Huyết Áp Của Bạn</h1>
+    title="Nhấp vào để khoá ứng dụng">Quản Lý Chỉ Số Huyết Áp</h1>
   <div class="author">D.T.Chánh</div>
 
   <!-- MÀN HÌNH THIẾT LẬP MẬT KHẨU LẦN ĐẦU -->
@@ -603,14 +603,6 @@
         style="margin-bottom: 0; width: 10rem; padding: 0.4rem; border: 2px solid var(--border-color); border-radius: 0.4rem;">
       <button id="direct_call_btn" onclick="handleCallOrSaveClick(event)" class="call-btn" style="display: none;">📞
         Gọi</button>
-    </div>
-
-    <!-- YÊU CẦU NẠP FILE HƯỚNG DẪN (NẾU CHẠY FILE:// VÀ CHƯA CÓ TRONG LOCALSTORAGE) -->
-    <div id="json_loader_card" class="card" style="display: none;">
-      <h3>Nạp Tập Tin Hướng Dẫn & Chẩn Đoán</h3>
-      <p>Do chính sách bảo mật của trình duyệt khi chạy trực tiếp file HTML offline (`file://`), ứng dụng không thể tự
-        động nạp tệp `huong-dan.json`. Bạn vui lòng chọn file `huong-dan.json` để hoàn tất thiết lập.</p>
-      <input type="file" id="json_file_input" accept=".json" onchange="loadJSONFromFile(event)">
     </div>
 
     <!-- HỆ THỐNG TABS -->
@@ -793,6 +785,230 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
+    // NHÚNG TRỰC TIẾP DỮ LIỆU JSON VÀO BIẾN JAVASCRIPT
+    const defaultGuideData = {
+      "huong_dan_huyet_ap": {
+        "khai_niem_chung": {
+          "title": "Khái niệm về huyết áp",
+          "tong_quan": {
+            "title": "Khái niệm chung",
+            "text": "Huyết áp gồm hai chỉ số chính: Tâm thu (SYS) và Tâm trương (DIA). Nhịp tim (PUL) thường được hiển thị kèm theo."
+          },
+          "giai_thich_ky_hieu": {
+            "title": "Giải thích ký hiệu",
+            "text": "SYS (Systolic): huyết áp tâm thu, số trên. DIA (Diastolic): huyết áp tâm trương, số dưới. PUL (Pulse): nhịp tim, số lần tim đập mỗi phút. MAP (Mean Arterial Pressure): huyết áp trung bình."
+          }
+        },
+        "huong_dan_do_huyet_ap": {
+          "title": "Cách đo huyết áp",
+          "cach_do_dung": {
+            "title": "Cách đo đúng",
+            "text": "Ngồi tựa lưng thoải mái, chân đặt phẳng trên sàn, tay đặt trên bàn ngang tầm tim. Quấn vòng bít bắp tay trên nếp gấp khuỷu tay 1 - 2 cm; nếu đo cổ tay phải giữ cổ tay ngang tầm ngực. Giữ yên lặng, không nói chuyện hoặc cử động trong suốt quá trình đo."
+          },
+          "thoi_diem_do": {
+            "title": "Thời điểm đo",
+            "text": "Nên đo tối thiểu 2 lần mỗi ngày: Buổi sáng khi vừa thức dậy (trước khi ăn, tập thể thao hay uống thuốc) và buổi tối trước khi đi ngủ khoảng 30 phút. Đo vào các khung giờ cố định và nghỉ ngơi 5 phút trước khi tiến hành đo."
+          },
+          "yeu_to_anh_huong": {
+            "title": "Yếu tố ảnh hưởng",
+            "text": "Căng thẳng, vận động mạnh, hút thuốc, uống cà phê/trà, ăn no, hoặc đo khi đang buồn tiểu đều có thể làm tăng huyết áp giả tạo. Nên tránh các yếu tố này ít nhất 30 phút trước khi đo."
+          }
+        },
+        "may_do_huyet_ap": {
+          "title": "Máy đo huyết áp",
+          "van_hanh_bao_quan": {
+            "title": "Vận hành và bảo quản máy",
+            "text": "Đọc kỹ hướng dẫn sử dụng, kiểm tra pin hoặc nguồn điện trước khi đo. Khi dùng xong cần cất giữ nơi khô ráo, tránh va đập mạnh, ẩm ướt hoặc ánh nắng trực tiếp."
+          },
+          "cac_loai_may_do": {
+            "title": "Các loại máy",
+            "text": "Máy cơ: độ chính xác cao nhưng đòi hỏi kỹ thuật. Máy điện tử bắp tay: phổ biến nhất, cho kết quả ổn định và chính xác. Máy điện tử cổ tay: nhỏ gọn, tiện mang theo, nhưng kết quả dễ sai lệch nếu đo sai tư thế."
+          },
+          "cach_chon_may": {
+            "title": "Chọn máy phù hợp",
+            "text": "Ưu tiên máy điện tử bắp tay có kiểm định lâm sàng (ESH, AAMI) và vòng bít vừa vặn. Chỉ chọn máy cổ tay khi bắp tay quá lớn hoặc bị chấn thương, và khi đo bắt buộc phải giữ cổ tay ngang tầm tim để đảm bảo chất lượng đo tốt nhất."
+          }
+        },
+        "nhan_biet_bat_thuong": {
+          "title": "Nhận biết bất thường",
+          "muc_huyet_ap_bat_thuong": {
+            "title": "Trường hợp bất thường",
+            "text": "Huyết áp cao hơn 140/90 mmHg hoặc thấp hơn 90/60 mmHg được coi là bất thường."
+          },
+          "dau_hieu_huyet_ap_cao": {
+            "title": "Dấu hiệu huyết áp cao",
+            "text": "Đau đầu dữ dội (đặc biệt là vùng sau gáy), chóng mặt, mặt đỏ bừng, chảy máu cam, khó thở hoặc tức ngực."
+          },
+          "dau_hieu_huyet_ap_thap": {
+            "title": "Dấu hiệu huyết áp thấp",
+            "text": "Chóng mặt, xây xẩm mặt mày, nhìn mờ, da lạnh nhợt nhạt, vã mồ hôi lạnh, buồn nôn hoặc ngất xỉu."
+          },
+          "chenh_lech_huyet_ap": {
+            "title": "Chênh lệch SYS/DIA",
+            "text": "Khoảng cách bình thường giữa SYS và DIA là 30 - 40 mmHg. Nếu chênh lệch quá lớn (tâm thu cao, tâm trương thấp) có thể do xơ cứng động mạch. Nếu chênh lệch quá nhỏ (dưới 20 mmHg, gọi là huyết áp kẹp) là dấu hiệu cảnh báo suy tim, hẹp van động mạch chủ hoặc mất máu/mất nước nặng."
+          },
+          "huong_dan_kham_bac_si": {
+            "title": "Khi nào đi khám",
+            "text": "Nên đi khám nếu chỉ số bất thường lặp lại nhiều lần. Đặc biệt, nếu chỉ số vượt quá 180/120 mmHg (cơn tăng huyết áp kịch phát) kèm đau ngực, khó thở, hoặc tê yếu cơ, cần gọi cấp cứu 115 ngay lập tức."
+          }
+        },
+        "lien_he_benh_ly": {
+          "title": "Liên hệ bệnh lý",
+          "bien_chung_nguy_hiem": {
+            "title": "Nguy cơ bệnh lý",
+            "text": "Huyết áp bất thường kéo dài không kiểm soát sẽ gây tổn thương nghiêm trọng đến các cơ quan đích, dẫn đến nhồi máu cơ tim, đột quỵ (tai biến mạch máu não), suy thận mạn tính và tổn thương võng mạc gây mù loà."
+          },
+          "tam_quan_trong_theo_doi": {
+            "title": "Tầm quan trọng",
+            "text": "Theo dõi huyết áp định kỳ là biện pháp hiệu quả nhất để phát hiện sớm 'kẻ giết người thầm lặng' này, giúp phòng ngừa các biến chứng nguy hiểm trước khi chúng xảy ra."
+          },
+          "huong_dan_ghi_chep": {
+            "title": "Ghi chép kết quả",
+            "text": "Nên ghi chép chi tiết kết quả (gồm ngày, giờ, chỉ số SYS/DIA/PUL) và lưu ý kèm theo (như sau khi tập thể dục hoặc sau khi uống thuốc) để giúp bác sĩ đánh giá chính xác hiệu quả điều trị."
+          }
+        },
+        "so_cuu_khan_cap": {
+          "title": "Xử lý khẩn cấp",
+          "nguyen_tac_so_cuu": {
+            "title": "Sơ cứu cơ bản",
+            "text": "Nếu huyết áp quá cao hoặc quá thấp kèm triệu chứng nguy hiểm, cần sơ cứu ngay."
+          },
+          "so_dien_thoai_khan_cap": {
+            "title": "Số khẩn cấp",
+            "text": "Gọi số cấp cứu 115 hoặc bác sĩ riêng khi cần."
+          },
+          "cac_buoc_so_cuu": {
+            "title": "Các bước sơ cứu",
+            "text": "Giữ người bệnh nằm yên ở nơi thoáng mát, nới lỏng quần áo, không tự ý cho ăn uống hay vận động mạnh, và nhanh chóng chờ nhân viên y tế."
+          }
+        }
+      },
+      "chan_doan": {
+        "huyet_ap_kep": {
+          "title": "Huyết áp kẹp (Hiệu số <= 20 mmHg)",
+          "text": "Cảnh báo nguy kịch: Hiệu số huyết áp của bạn đang ở mức rất thấp (<= 20 mmHg - Huyết áp kẹp). Đây là dấu hiệu lực co bóp của tim suy giảm nặng hoặc cơ thể mất nước/mất máu cấp. Hãy nằm yên tại chỗ, nới lỏng quần áo và gọi ngay cấp cứu 115 hoặc bác sĩ điều trị để được xử lý kịp thời!",
+          "conditions": {
+            "diff_max": 20
+          }
+        },
+        "hieu_so_can_kep": {
+          "title": "Hiệu số huyết áp cận kẹp (21 - 29 mmHg)",
+          "text": "Thông báo: Hiệu số huyết áp của bạn hơi thấp (21 - 29 mmHg). Trạng thái này có thể xảy ra khi cơ thể thiếu nước nhẹ, mệt mỏi hoặc căng thẳng tâm lý. Bạn nên nghỉ ngơi, uống nước ấm và tiếp tục theo dõi thêm.",
+          "conditions": {
+            "diff_min": 21,
+            "diff_max": 29
+          }
+        },
+        "hieu_so_binh_thuong": {
+          "title": "Hiệu số huyết áp bình thường (30 - 50 mmHg)",
+          "text": "Chúc mừng: Hiệu số huyết áp của bạn nằm trong khoảng an toàn (30 - 50 mmHg). Điều này cho thấy hệ thống tim mạch và độ co giãn của mạch máu đang hoạt động tốt.",
+          "conditions": {
+            "diff_min": 30,
+            "diff_max": 50
+          }
+        },
+        "hieu_so_can_rong": {
+          "title": "Hiệu số huyết áp cận rộng (51 - 59 mmHg)",
+          "text": "Thông báo: Hiệu số huyết áp của bạn ở mức hơi cao (51 - 59 mmHg). Đây là dấu hiệu cảnh báo sớm sự suy giảm đàn hồi nhẹ của thành mạch máu. Bạn nên điều chỉnh lối sống, giảm ăn mặn và tập thể dục đều đặn.",
+          "conditions": {
+            "diff_min": 51,
+            "diff_max": 59
+          }
+        },
+        "hieu_so_rong": {
+          "title": "Hiệu số huyết áp rộng (Chênh lệch lớn >= 60 mmHg)",
+          "text": "Cảnh báo: Khoảng cách giữa huyết áp tâm thu và tâm trương của bạn đang ở mức rất lớn (>= 60 mmHg). Hiện tượng này thường do xơ cứng động mạch (mạch máu giảm đàn hồi ở người lớn tuổi), hở van động mạch chủ hoặc cường giáp. Bạn nên sớm đi khám bác sĩ chuyên khoa tim mạch để được chẩn đoán và phòng ngừa nguy cơ tai biến mạch máu não.",
+          "conditions": {
+            "diff_min": 60
+          }
+        },
+        "con_tang_huyet_ap_kich_phat": {
+          "title": "Cơn tăng huyết áp kịch phát (Cấp cứu)",
+          "text": "Cảnh báo đỏ: Chỉ số huyết áp của bạn ở mức cực kỳ nguy hiểm (SYS >= 180 hoặc DIA >= 120 mmHg). Đây là cơn tăng huyết áp cấp tính có nguy cơ trực tiếp gây tai biến mạch máu não hoặc đột quỵ tim. Hãy nghỉ ngơi yên tĩnh hoàn toàn và gọi cấp cứu 115 ngay lập tức nếu kèm các triệu chứng đau đầu dữ dội, tức ngực, khó thở hoặc tê yếu tay chân!",
+          "conditions": {
+            "sys_min": 180,
+            "dia_min": 120,
+            "operator": "or"
+          }
+        },
+        "tang_huyet_ap_do_2": {
+          "title": "Tăng huyết áp độ 2 (Mức độ nặng)",
+          "text": "Cảnh báo: Chỉ số phản ánh tình trạng Tăng huyết áp độ 2 (SYS 160 - 179 hoặc DIA 100 - 109 mmHg). Bạn cần ngồi nghỉ ngơi tĩnh lặng ở nơi thoáng mát từ 15 - 30 phút rồi tiến hành đo lại. Nếu chỉ số vẫn cao hoặc xuất hiện các triệu chứng đau đầu, chóng mặt, cần liên hệ bác sĩ điều trị để được tư vấn điều chỉnh thuốc hạ áp.",
+          "conditions": {
+            "sys_min": 160,
+            "sys_max": 179,
+            "dia_min": 100,
+            "dia_max": 109,
+            "operator": "or"
+          }
+        },
+        "tang_huyet_ap_do_1": {
+          "title": "Tăng huyết áp độ 1 (Mức độ nhẹ)",
+          "text": "Thông báo: Bạn đang ở mức Tăng huyết áp độ 1 (SYS 140 - 159 hoặc DIA 90 - 99 mmHg). Hãy chú ý theo dõi huyết áp hằng ngày, thiết lập lối sống lành mạnh (giảm muối, giảm chất béo, tăng cường vận động) và tham khảo ý kiến bác sĩ để có phương án kiểm soát lâu dài trước khi tiến triển nặng hơn.",
+          "conditions": {
+            "sys_min": 140,
+            "sys_max": 159,
+            "dia_min": 90,
+            "dia_max": 99,
+            "operator": "or"
+          }
+        },
+        "tien_tang_huyet_ap": {
+          "title": "Tiền tăng huyết áp (Huyết áp bình thường cao)",
+          "text": "Thông báo: Huyết áp của bạn ở mức bình thường cao (SYS 120 - 139 hoặc DIA 80 - 89 mmHg). Bạn chưa cần điều trị bằng thuốc nhưng nên điều chỉnh chế độ ăn uống khoa học, hạn chế rượu bia, thuốc lá và rèn luyện thể chất đều đặn để ngăn ngừa tiến triển thành cao huyết áp.",
+          "conditions": {
+            "sys_min": 120,
+            "sys_max": 139,
+            "dia_min": 80,
+            "dia_max": 89,
+            "operator": "or"
+          }
+        },
+        "huyet_ap_binh_thuong": {
+          "title": "Huyết áp bình thường (Ổn định)",
+          "text": "Chúc mừng: Chỉ số huyết áp của bạn hoàn toàn bình thường và ổn định (SYS 90 - 119 và DIA 60 - 79 mmHg). Hãy duy trì chế độ sinh hoạt, dinh dưỡng lành mạnh và tập luyện thể dục thể thao đều đặn hiện tại để tiếp tục bảo vệ sức khoẻ tim mạch!",
+          "conditions": {
+            "sys_min": 90,
+            "sys_max": 119,
+            "dia_min": 60,
+            "dia_max": 79,
+            "operator": "and"
+          }
+        },
+        "huyet_ap_thap": {
+          "title": "Huyết áp thấp",
+          "text": "Thông báo: Huyết áp của bạn đang ở mức thấp (SYS < 90 hoặc DIA < 60 mmHg). Hãy nằm nghỉ đầu thấp, uống một ly nước ấm (trà gừng hoặc nước ấm pha muối nhạt) để nâng huyết áp. Tránh thay đổi tư thế đột ngột từ nằm sang đứng để không bị chóng mặt, té ngã. Nếu chỉ số quá thấp kèm ngất xỉu, cần đưa đến cơ sở y tế gần nhất.",
+          "conditions": {
+            "sys_max": 89,
+            "dia_max": 59,
+            "operator": "or"
+          }
+        },
+        "nhip_tim_cham": {
+          "title": "Nhịp tim chậm (< 60 lần/phút)",
+          "text": "Thông báo: Nhịp tim của bạn đang ở mức thấp (< 60 lần/phút). Điều này là bình thường ở các vận động viên hoặc người tập thể thao thường xuyên. Tuy nhiên, nếu bạn không phải vận động viên và cảm thấy chóng mặt, mệt mỏi, khó thở, bạn nên tham khảo ý kiến bác sĩ để được kiểm tra tim mạch.",
+          "conditions": {
+            "pul_max": 59
+          }
+        },
+        "nhip_tim_binh_thuong": {
+          "title": "Nhịp tim bình thường (60 - 100 lần/phút)",
+          "text": "Chúc mừng: Nhịp tim của bạn nằm trong khoảng bình thường và ổn định (60 - 100 lần/phút). Điều này phản ánh trạng thái hoạt động co bóp và nghỉ ngơi tốt của cơ tim.",
+          "conditions": {
+            "pul_min": 60,
+            "pul_max": 100
+          }
+        },
+        "nhip_tim_nhanh": {
+          "title": "Nhịp tim nhanh (> 100 lần/phút)",
+          "text": "Cảnh báo: Nhịp tim của bạn ở mức cao (> 100 lần/phút). Tình trạng này có thể xuất hiện sau khi vừa vận động, lo âu, sốt hoặc mất nước. Bạn nên ngồi nghỉ tĩnh lặng từ 10 - 15 phút rồi đo lại. Nếu nhịp tim vẫn cao liên tục khi nghỉ ngơi kèm hồi hộp, đánh trống ngực, hãy sớm đi khám bác sĩ chuyên khoa tim mạch.",
+          "conditions": {
+            "pul_min": 101
+          }
+        }
+      }
+    };
+
     // ĐÈ LÊN WINDOW.ALERT ĐỂ ĐỒNG BỘ GIAO DIỆN
     window.alert = function (message) {
       document.getElementById("custom_alert_message").textContent = message;
@@ -821,7 +1037,7 @@
     let userPassword = "";
     let emergencyPhone = "";
     let historyRecords = [];
-    let guideData = null; // Chứa nội dung tệp huong-dan.json
+    let guideData = null; // Chứa nội dung tệp JSON đã được nhúng
 
     // 3 biến số nội bộ quản lý trạng thái nguy hại
     let muc_do_huyet_ap = 0;
@@ -848,7 +1064,7 @@
       "nhip_tim_nhanh": 1
     };
 
-    // Hàm dự phòng tính toán mức độ nguy hiểm khi chưa tải xong tệp JSON
+    // Hàm dự phòng tính toán mức độ nguy hiểm
     function getFallbackLevels(sys, dia, pul) {
       const diff = sys - dia;
 
@@ -883,6 +1099,10 @@
       now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
       document.getElementById("input_datetime").value = now.toISOString().slice(0, 16);
 
+      // Gán dữ liệu JSON đã nhúng sẵn vào biến toàn cục và hiển thị luôn
+      guideData = defaultGuideData;
+      renderGuide();
+
       // Kiểm tra xem ứng dụng đã được thiết lập mật khẩu chưa
       if (!localStorage.getItem("verify_token")) {
         showView("setup_view");
@@ -890,12 +1110,7 @@
         showView("lock_view");
         document.getElementById("unlock_password").focus();
       }
-
-      // Cố gắng tự động tải tệp huong-dan.json
-      autoFetchJSON();
     });
-
-
 
     // CHUYỂN ĐỔI CHẾ ĐỘ VIEW TRÊN MÀN HÌNH
     function showView(viewId) {
@@ -911,7 +1126,6 @@
       for (let i = 0; i < text.length; i++) {
         result += String.fromCharCode(text.charCodeAt(i) ^ key.charCodeAt(i % key.length));
       }
-      // Mã hoá Base64 an toàn cho chuỗi UTF-8 tiếng Việt
       return btoa(unescape(encodeURIComponent(result)));
     }
 
@@ -942,7 +1156,6 @@
       emergencyPhone = phone;
       historyRecords = [];
 
-      // Lưu trữ thông tin xác minh và giá trị ban đầu vào localStorage dưới dạng mã hoá
       const token = encrypt("VERIFY_PASSWORD", userPassword);
       const encPhone = encrypt(emergencyPhone, userPassword);
       const encRecords = encrypt(JSON.stringify([]), userPassword);
@@ -987,16 +1200,13 @@
 
     // CÁC THAO TÁC KHI MỞ KHOÁ THÀNH CÔNG
     function unlockApplication() {
-      // Đọc và giải mã số điện thoại khẩn cấp
       const phoneCipher = localStorage.getItem("emergency_phone");
       emergencyPhone = decrypt(phoneCipher, userPassword) || "";
       document.getElementById("emergency_call_btn").href = emergencyPhone ? "tel:" + emergencyPhone : "#";
       document.getElementById("emergency_phone_input").value = emergencyPhone;
 
-      // Đồng bộ nút gọi điện
       updateCallBtnState();
 
-      // Đọc và giải mã lịch sử đo
       const recordsCipher = localStorage.getItem("history_records");
       const recordsText = decrypt(recordsCipher, userPassword);
       try {
@@ -1016,13 +1226,10 @@
       emergencyPhone = newPhone;
       document.getElementById("emergency_call_btn").href = emergencyPhone ? "tel:" + emergencyPhone : "#";
 
-      // Mã hoá và lưu lại vào localStorage
       const encryptedPhone = encrypt(emergencyPhone, userPassword);
       localStorage.setItem("emergency_phone", encryptedPhone);
 
-      // Đồng bộ trạng thái hiển thị nút Gọi/Lưu
       updateCallBtnState();
-
       alert("Đã cập nhật số điện thoại bác sĩ thành công!");
     }
 
@@ -1051,7 +1258,7 @@
 
     // XỬ LÝ CLICK GỌI ĐIỆN PHÙ HỢP VỚI THIẾT BỊ VÀ TRÁNH GỌI NHẦM
     function handleCallClick(event, phoneNum) {
-      event.preventDefault(); // Chặn hành vi mở link mặc định của trình duyệt
+      event.preventDefault();
 
       if (!phoneNum || phoneNum.trim() === "") {
         alert("Chưa thiết lập số điện thoại bác sĩ! Vui lòng nhập số điện thoại ở thanh cấu hình phía trên.");
@@ -1099,13 +1306,11 @@
           btn.textContent = "📞 Gọi";
           btn.style.display = "inline-flex";
           if (hasLevel3) {
-            // Đổi màu sang đỏ nổi bật khi có mức 3
             btn.style.backgroundColor = "var(--danger-color)";
             btn.style.borderColor = "var(--danger-color)";
             btn.style.color = "#ffffff";
             btn.style.animation = "pulse-danger-border 1.5s infinite alternate";
           } else {
-            // Trở về màu mặc định (xanh lá)
             btn.style.backgroundColor = "var(--success-color)";
             btn.style.borderColor = "var(--success-color)";
             btn.style.color = "#ffffff";
@@ -1125,89 +1330,6 @@
       document.getElementById("unlock_password").focus();
     }
 
-    // ĐỒNG BỘ CHỦ ĐỀ GIAO DIỆN (THEME)
-    function changeTheme() {
-      const mode = document.getElementById("theme_mode").value;
-      localStorage.setItem("theme_choice", mode);
-      applyTheme(mode);
-    }
-
-    function applyTheme(mode) {
-      if (mode === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
-      } else if (mode === "light") {
-        document.documentElement.removeAttribute("data-theme");
-      } else {
-        // Chế độ Auto (tự động theo hệ thống)
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (prefersDark) {
-          document.documentElement.setAttribute("data-theme", "dark");
-        } else {
-          document.documentElement.removeAttribute("data-theme");
-        }
-      }
-      // Vẽ lại biểu đồ nếu có dữ liệu để đồng bộ màu chữ của trục tọa độ
-      drawCharts();
-    }
-
-    // TỰ ĐỘNG TẢI FILE JSON
-    function autoFetchJSON() {
-      fetch("huong-dan.json")
-        .then(response => {
-          if (!response.ok) throw new Error("Không thể nạp file tự động");
-          return response.json();
-        })
-        .then(data => {
-          guideData = data;
-          localStorage.setItem("cache_guide_data", JSON.stringify(data));
-          document.getElementById("json_loader_card").style.display = "none";
-          renderGuide();
-          if (historyRecords.length > 0) {
-            updateUI(); // Vẽ lại giao diện nếu có lịch sử chờ chẩn đoán
-          }
-        })
-        .catch(err => {
-          // Nếu không nạp tự động được (CORS hoặc offline), kiểm tra xem trong localStorage đã có cache chưa
-          const cached = localStorage.getItem("cache_guide_data");
-          if (cached) {
-            try {
-              guideData = JSON.parse(cached);
-              document.getElementById("json_loader_card").style.display = "none";
-              renderGuide();
-              return;
-            } catch (e) { }
-          }
-          // Hiển thị khung yêu cầu chọn file thủ công
-          document.getElementById("json_loader_card").style.display = "block";
-        });
-    }
-
-    // CHỌN VÀ TẢI FILE JSON THỦ CÔNG
-    function loadJSONFromFile(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        try {
-          const data = JSON.parse(e.target.result);
-          if (data && data.huong_dan_huyet_ap && data.chan_doan) {
-            guideData = data;
-            localStorage.setItem("cache_guide_data", JSON.stringify(data));
-            document.getElementById("json_loader_card").style.display = "none";
-            renderGuide();
-            alert("Nạp tệp dữ liệu hướng dẫn và chẩn đoán thành công!");
-            updateUI(); // Cập nhật lại chẩn đoán nếu trước đó chưa có dữ liệu cấu trúc
-          } else {
-            alert("Tập tin JSON không đúng định dạng chuẩn!");
-          }
-        } catch (err) {
-          alert("Lỗi khi đọc file JSON: " + err.message);
-        }
-      };
-      reader.readAsText(file, "UTF-8");
-    }
-
     // ĐIỀU HƯỚNG TABS
     function switchTab(tabName) {
       const inputVal = document.getElementById("emergency_phone_input").value.trim();
@@ -1222,16 +1344,12 @@
     }
 
     function performTabSwitch(tabName) {
-      // Ẩn toàn bộ tab contents
       document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
-      // Tắt trạng thái active trên các nút tab
       document.querySelectorAll(".tab-btn").forEach(el => el.classList.remove("active"));
 
-      // Hiện nội dung tab và bật active nút tương ứng
       document.getElementById("tab_" + tabName).classList.add("active");
       document.getElementById("tab_btn_" + tabName).classList.add("active");
 
-      // Nếu chuyển sang tab lịch sử thì vẽ lại biểu đồ để đảm bảo kích thước co giãn chính xác
       if (tabName === "lichsu") {
         drawCharts();
       }
@@ -1248,7 +1366,6 @@
       let huyetApRes = null;
       let nhipTimRes = null;
 
-      // 1. Phân loại hiệu số huyết áp
       const diffKeys = ["huyet_ap_kep", "hieu_so_can_kep", "hieu_so_binh_thuong", "hieu_so_can_rong", "hieu_so_rong"];
       for (let key of diffKeys) {
         if (!chanDoanData[key]) continue;
@@ -1262,7 +1379,6 @@
         }
       }
 
-      // 2. Phân loại huyết áp (Duyệt theo mức độ nghiêm trọng giảm dần)
       const bpKeys = [
         "con_tang_huyet_ap_kich_phat",
         "tang_huyet_ap_do_2",
@@ -1297,7 +1413,7 @@
           } else {
             finalMatch = true;
           }
-        } else { // Toán tử "and"
+        } else {
           if (hasSysCond && hasDiaCond) {
             finalMatch = sysOk && diaOk;
           } else if (hasSysCond) {
@@ -1315,7 +1431,6 @@
         }
       }
 
-      // 3. Phân loại nhịp tim
       const pulseKeys = ["nhip_tim_cham", "nhip_tim_binh_thuong", "nhip_tim_nhanh"];
       for (let key of pulseKeys) {
         if (!chanDoanData[key]) continue;
@@ -1356,7 +1471,6 @@
         return;
       }
 
-      // Xử lý chuyển đổi ngày giờ hiển thị theo chuẩn Việt Nam (DD/MM/YYYY HH:MM)
       const dt = new Date(datetimeInput);
       const formattedDate = dt.getDate().toString().padStart(2, '0') + '/' +
         (dt.getMonth() + 1).toString().padStart(2, '0') + '/' +
@@ -1364,7 +1478,6 @@
         dt.getHours().toString().padStart(2, '0') + ':' +
         dt.getMinutes().toString().padStart(2, '0');
 
-      // Thực hiện chẩn đoán
       let diagResultText = { bpTitle: "N/A", bpText: "Chưa nạp cấu trúc hướng dẫn.", diffTitle: "N/A", diffText: "", pulTitle: "N/A", pulText: "" };
       let isEmergency = false;
 
@@ -1380,7 +1493,6 @@
             pulText: diag.nhip_tim ? diag.nhip_tim.text : ""
           };
 
-          // Gán đồng thời
           muc_do_huyet_ap = diag.huyet_ap ? diag.huyet_ap.level : 0;
           muc_do_hieu_so = diag.hieu_so ? diag.hieu_so.level : 0;
           muc_do_nhip_tim = diag.nhip_tim ? diag.nhip_tim.level : 0;
@@ -1394,30 +1506,25 @@
 
       isEmergency = (muc_do_huyet_ap === 3 || muc_do_hieu_so === 3 || muc_do_nhip_tim === 3);
 
-      // Cập nhật giao diện kết quả chẩn đoán nhanh
       document.getElementById("diagnosis_placeholder").style.display = "none";
       const diagView = document.getElementById("diagnosis_result");
       diagView.style.display = "block";
 
-      // 1. Chỉ số huyết áp
       const boxBp = document.getElementById("diag_bp");
       boxBp.className = "result-box level-" + muc_do_huyet_ap;
       boxBp.querySelector(".diag-title").textContent = diagResultText.bpTitle;
       boxBp.querySelector(".diag-text").textContent = diagResultText.bpText;
 
-      // 2. Chỉ số hiệu số
       const boxDiff = document.getElementById("diag_diff");
       boxDiff.className = "result-box level-" + muc_do_hieu_so;
       boxDiff.querySelector(".diag-title").textContent = diagResultText.diffTitle;
       boxDiff.querySelector(".diag-text").textContent = diagResultText.diffText;
 
-      // 3. Chỉ số nhịp tim
       const boxPul = document.getElementById("diag_pul");
       boxPul.className = "result-box level-" + muc_do_nhip_tim;
       boxPul.querySelector(".diag-title").textContent = diagResultText.pulTitle;
       boxPul.querySelector(".diag-text").textContent = diagResultText.pulText;
 
-      // Lưu trữ bản ghi mới vào mảng lịch sử
       const newRecord = {
         datetime: formattedDate,
         sys: sys,
@@ -1433,15 +1540,10 @@
         is_emergency: isEmergency
       };
 
-      historyRecords.unshift(newRecord); // Cho lên đầu tiên
-
-      // Lưu trữ mã hoá xuống localStorage
+      historyRecords.unshift(newRecord);
       saveHistory();
 
-      // Làm sạch ghi chú của biểu mẫu
       document.getElementById("input_note").value = "";
-
-      // Cập nhật lại bảng lịch sử và biểu đồ
       updateUI();
     }
 
@@ -1471,7 +1573,6 @@
 
     // CẬP NHẬT TOÀN BỘ GIAO DIỆN
     function updateUI() {
-      // 1. Cập nhật Bảng lịch sử
       const tbody = document.getElementById("history_tbody");
       tbody.innerHTML = "";
 
@@ -1479,7 +1580,6 @@
         tbody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Chưa có dữ liệu đo được lưu.</td></tr>';
       } else {
         historyRecords.forEach((r, index) => {
-          // Thực hiện chạy lại chẩn đoán cho từng bản ghi cũ nếu chưa được gán nhãn chẩn đoán hoặc chưa có mức độ
           if (r.level_bp === undefined || r.level_diff === undefined || r.level_pul === undefined || !r.bp_title || r.bp_title === "N/A") {
             if (guideData) {
               const diag = getDiagnosis(r.sys, r.dia, r.pul);
@@ -1502,8 +1602,6 @@
           }
 
           const tr = document.createElement("tr");
-
-          // Áp dụng lớp CSS theo mức độ nguy hại cao nhất của bản ghi
           const maxLevel = Math.max(r.level_bp || 0, r.level_diff || 0, r.level_pul || 0);
           tr.className = "history-row-level-" + maxLevel;
 
@@ -1521,7 +1619,6 @@
         });
       }
 
-      // 2. Cảnh báo Banner Khẩn cấp (Nếu bản ghi đo mới nhất ở trạng thái nguy hiểm)
       const banner = document.getElementById("emergency_banner");
       if (historyRecords.length > 0 && historyRecords[0].is_emergency) {
         banner.style.display = "block";
@@ -1529,10 +1626,7 @@
         banner.style.display = "none";
       }
 
-      // Đồng bộ trạng thái hiển thị và đổi màu của nút gọi điện bác sĩ
       updateCallBtnState();
-
-      // 3. Vẽ lại các biểu đồ
       drawCharts();
     }
 
@@ -1541,7 +1635,6 @@
       const svgBp = document.getElementById("svg_bp_chart");
       const svgPul = document.getElementById("svg_pul_chart");
 
-      // Nếu không có dữ liệu đo, hiển thị dòng chữ thông báo
       if (historyRecords.length === 0) {
         const textElement = `<text x="50%" y="50%" text-anchor="middle" fill="var(--text-color)">Chưa có dữ liệu để vẽ biểu đồ</text>`;
         svgBp.innerHTML = textElement;
@@ -1549,11 +1642,8 @@
         return;
       }
 
-      // Lấy tối đa 15 lần đo gần nhất để vẽ (và lật ngược lại theo thứ tự thời gian cũ trước mới sau)
       const chartData = historyRecords.slice(0, 15).reverse();
       const n = chartData.length;
-
-      // Kích thước chuẩn hoá của SVG
       const width = 800;
       const height = 300;
       const paddingLeft = 50;
@@ -1562,13 +1652,8 @@
       const paddingBottom = 40;
       const plotWidth = width - paddingLeft - paddingRight;
       const plotHeight = height - paddingTop - paddingBottom;
-
-      // Bước nhảy trục hoành
       const xStep = n > 1 ? plotWidth / (n - 1) : plotWidth;
 
-      // ----------------------------------------------------
-      // BIỂU ĐỒ HUYẾT ÁP (SYS & DIA)
-      // ----------------------------------------------------
       let maxSys = 160;
       let minDia = 60;
       chartData.forEach(r => {
@@ -1580,10 +1665,7 @@
 
       const yBpScale = (val) => height - paddingBottom - ((val - minDia) / (maxSys - minDia)) * plotHeight;
 
-      // Khởi tạo các thành phần đồ hoạ cho biểu đồ Huyết áp
       let bpContent = "";
-
-      // 1. Vẽ các đường lưới nằm ngang (Grid)
       const gridLevels = 4;
       for (let i = 0; i <= gridLevels; i++) {
         const val = Math.round(minDia + (i / gridLevels) * (maxSys - minDia));
@@ -1592,7 +1674,6 @@
         bpContent += `<text x="${paddingLeft - 8}" y="${y + 4}" text-anchor="end" class="chart-text" fill="var(--text-color)">${val}</text>`;
       }
 
-      // 2. Tạo toạ độ cho các đường dẫn (paths)
       let sysPoints = [];
       let diaPoints = [];
       chartData.forEach((r, idx) => {
@@ -1603,29 +1684,22 @@
         diaPoints.push(`${x},${yDia}`);
       });
 
-      // 3. Vẽ đường gấp khúc (Polyline)
       bpContent += `<polyline points="${sysPoints.join(' ')}" class="chart-line-sys" />`;
       bpContent += `<polyline points="${diaPoints.join(' ')}" class="chart-line-dia" />`;
 
-      // 4. Vẽ các điểm nút tròn (mốc đo) và các mác chữ
       chartData.forEach((r, idx) => {
         const x = paddingLeft + idx * xStep;
         const ySys = yBpScale(r.sys);
         const yDia = yBpScale(r.dia);
 
-        // Nút tròn tâm thu (SYS)
         bpContent += `<circle cx="${x}" cy="${ySys}" r="5" fill="var(--danger-color)" class="chart-point" 
                       onmouseover="showTooltip(event, '${r.datetime}', 'Tâm thu (SYS): ${r.sys} mmHg')" 
                       onmouseout="hideTooltip()"/>`;
-        // Nút tròn tâm trương (DIA)
         bpContent += `<circle cx="${x}" cy="${yDia}" r="5" fill="var(--primary-color)" class="chart-point" 
                       onmouseover="showTooltip(event, '${r.datetime}', 'Tâm trương (DIA): ${r.dia} mmHg')" 
                       onmouseout="hideTooltip()"/>`;
 
-        // Nhãn ghi chú ngày giờ (Chỉ in nhãn chéo góc để tránh chồng lấn chữ)
-        // Nếu số lượng mốc đo quá nhiều thì in giãn cách nhãn
         if (n <= 7 || idx % 2 === 0 || idx === n - 1) {
-          // Cắt bớt phần giờ chỉ lấy ngày tháng
           const dateLabel = r.datetime.split(' ')[0];
           bpContent += `<g transform="translate(${x}, ${height - paddingBottom + 15})">
                           <text x="0" y="0" text-anchor="middle" transform="rotate(-15)" class="chart-text" fill="var(--text-color)">${dateLabel}</text>
@@ -1633,15 +1707,11 @@
         }
       });
 
-      // 5. Vẽ trục toạ độ
       bpContent += `<line x1="${paddingLeft}" y1="${paddingTop}" x2="${paddingLeft}" y2="${height - paddingBottom}" class="chart-axis" />`;
       bpContent += `<line x1="${paddingLeft}" y1="${height - paddingBottom}" x2="${width - paddingRight}" y2="${height - paddingBottom}" class="chart-axis" />`;
 
       svgBp.innerHTML = bpContent;
 
-      // ----------------------------------------------------
-      // BIỂU ĐỒ NHỊP TIM (PUL)
-      // ----------------------------------------------------
       let maxPul = 100;
       let minPul = 60;
       chartData.forEach(r => {
@@ -1655,7 +1725,6 @@
 
       let pulContent = "";
 
-      // 1. Vẽ đường lưới nhịp tim
       for (let i = 0; i <= gridLevels; i++) {
         const val = Math.round(minPul + (i / gridLevels) * (maxPul - minPul));
         const y = yPulScale(val);
@@ -1663,7 +1732,6 @@
         pulContent += `<text x="${paddingLeft - 8}" y="${y + 4}" text-anchor="end" class="chart-text" fill="var(--text-color)">${val}</text>`;
       }
 
-      // 2. Tạo đường gấp khúc nhịp tim
       let pulPoints = [];
       chartData.forEach((r, idx) => {
         const x = paddingLeft + idx * xStep;
@@ -1673,7 +1741,6 @@
 
       pulContent += `<polyline points="${pulPoints.join(' ')}" class="chart-line-pul" />`;
 
-      // 3. Vẽ mốc nhịp tim
       chartData.forEach((r, idx) => {
         const x = paddingLeft + idx * xStep;
         const yPul = yPulScale(r.pul);
@@ -1690,7 +1757,6 @@
         }
       });
 
-      // 4. Vẽ trục toạ độ
       pulContent += `<line x1="${paddingLeft}" y1="${paddingTop}" x2="${paddingLeft}" y2="${height - paddingBottom}" class="chart-axis" />`;
       pulContent += `<line x1="${paddingLeft}" y1="${height - paddingBottom}" x2="${width - paddingRight}" y2="${height - paddingBottom}" class="chart-axis" />`;
 
@@ -1703,7 +1769,6 @@
       tooltip.innerHTML = `<strong>${datetime}</strong><br>${valueText}`;
       tooltip.style.display = "block";
 
-      // Định vị vị trí tooltip gần con trỏ chuột
       tooltip.style.left = (event.pageX + 15) + "px";
       tooltip.style.top = (event.pageY - 10) + "px";
     }
@@ -1737,7 +1802,6 @@
         csvContent += `"${r.datetime}",${r.sys},${r.dia},${r.pul},"${noteSafe}","${bpTitleSafe}","${diffTitleSafe}","${pulTitleSafe}"\n`;
       });
 
-      // Tạo Blob và tải tập tin
       const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
@@ -1783,7 +1847,6 @@
           const line = lines[i].trim();
           if (!line) continue;
 
-          // Phân tách dấu phẩy thông minh (xử lý dấu ngoặc kép)
           let parts = [];
           let insideQuote = false;
           let currentPart = "";
@@ -1807,7 +1870,6 @@
             const note = parts[4] ? parts[4].replace(/^"|"$/g, '').replace(/""/g, '"') : "";
 
             if (!isNaN(sys) && !isNaN(dia) && !isNaN(pul)) {
-              // Thực hiện lại việc phân tích chẩn đoán đối với các dòng dữ liệu nhập ngược
               let bpTitle = "";
               let diffTitle = "";
               let pulTitle = "";
@@ -1854,7 +1916,6 @@
         }
 
         if (newRecords.length > 0) {
-          // Gộp dữ liệu mới vào dữ liệu hiện có (loại bỏ trùng lặp nếu trùng thời gian)
           newRecords.forEach(newRec => {
             const isDup = historyRecords.some(r => r.datetime === newRec.datetime && r.sys === newRec.sys && r.dia === newRec.dia);
             if (!isDup) {
@@ -1862,8 +1923,6 @@
             }
           });
 
-          // Sắp xếp lại lịch sử theo thứ tự thời gian mới nhất lên đầu
-          // Định dạng thời gian: DD/MM/YYYY HH:MM
           historyRecords.sort((a, b) => {
             const parseDate = (str) => {
               const [d, m, y, h, min] = str.split(/[\/\s:]/);
@@ -1881,7 +1940,7 @@
       };
 
       reader.readAsText(file, "UTF-8");
-      event.target.value = ""; // Đặt lại input để có thể nhập lại cùng một file
+      event.target.value = "";
     }
 
     // HIỂN THỊ CẨM NANG HƯỚNG DẪN TỪ JSON
@@ -1896,7 +1955,6 @@
 
       const guides = guideData.huong_dan_huyet_ap;
 
-      // Các danh mục muốn dựng cẩm nang
       const sections = [
         { key: "khai_niem_chung", title: "1. Khái niệm về Huyết áp & Ký hiệu" },
         { key: "huong_dan_do_huyet_ap", title: "2. Quy trình & Tư thế Đo huyết áp đúng" },
@@ -1913,18 +1971,15 @@
         const accordion = document.createElement("div");
         accordion.className = "accordion-item";
 
-        // Phần tiêu đề Accordion
         const header = document.createElement("div");
         header.className = "accordion-header";
         header.innerHTML = `<span>${sec.title}</span> <span class="arrow">▼</span>`;
         header.onclick = () => toggleAccordion(index);
 
-        // Phần nội dung bên trong Accordion
         const content = document.createElement("div");
         content.className = "accordion-content";
         content.id = "accordion_content_" + index;
 
-        // Xây dựng nội dung chi tiết dựa trên cấu trúc các sub-keys của JSON
         let detailHtml = "";
         for (let subKey in sectionData) {
           if (subKey === "title") continue;
@@ -1949,11 +2004,9 @@
       const content = document.getElementById("accordion_content_" + index);
       const isVisible = content.classList.contains("active");
 
-      // Đóng tất cả accordion khác trước
       document.querySelectorAll(".accordion-content").forEach(el => el.classList.remove("active"));
       document.querySelectorAll(".accordion-header .arrow").forEach(el => el.textContent = "▼");
 
-      // Nếu trước đó chưa mở thì mở ra
       if (!isVisible) {
         content.classList.add("active");
         content.parentNode.querySelector(".arrow").textContent = "▲";
@@ -1963,10 +2016,7 @@
     // XỬ LÝ XOÁ TOÀN BỘ DỮ LIỆU KHI QUÊN MẬT KHẨU
     function handleForgotClearData() {
       showConfirm("CẢNH BÁO: Hành động này sẽ xoá sạch toàn bộ dữ liệu đo huyết áp, số điện thoại bác sĩ và mật khẩu của bạn. Bạn sẽ phải thiết lập lại từ đầu. Bạn có chắc chắn muốn tiếp tục không?", function () {
-        // 1. Xoá localStorage
         localStorage.clear();
-
-        // 2. Xoá tất cả cookies
         document.cookie.split(";").forEach(function (c) {
           document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
         });
